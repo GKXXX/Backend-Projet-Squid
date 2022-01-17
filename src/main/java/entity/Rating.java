@@ -23,4 +23,12 @@ public class Rating {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 }
