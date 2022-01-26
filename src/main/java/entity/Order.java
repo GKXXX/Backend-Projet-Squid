@@ -4,21 +4,22 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "orders")
 public class Order {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="totalAmmount")
+
     private Number totalAmmount;
-    @Column(name="shipperyState")
+
     private String shipperyState;
-    @Column(name ="paiementMethod")
+
     private String paiementMethod;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="orderToArticle",joinColumns = {@JoinColumn(name="orderId")}, inverseJoinColumns = {@JoinColumn(name="articleId")})
+    @JoinTable(name="order_to_article",joinColumns = {@JoinColumn(name="id")}, inverseJoinColumns = {@JoinColumn(name="id_article")})
     private Set<Article> articles;
     @ManyToOne
-    @JoinColumn(name="customerId")
+    @JoinColumn(name="id")
     private Customer customer;
 
     public Long getId() {

@@ -2,9 +2,8 @@ package controllers;
 
 import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import repositories.ArticleRepository;
 
 import java.util.ArrayList;
@@ -14,16 +13,26 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-@RestController
+@Controller
+@RequestMapping("/articles")
 public class ArticleController {
 
+    @Autowired
+    private ArticleRepository articleRepository;
     private static final String template = "Hello World";
     private final AtomicLong counter = new AtomicLong();
 
-    @GetMapping("/getAll")
-    public List<Article> getAllArticles() {
+    @PostMapping("/postArticle")
+    public @ResponseBody String addNewArticle(@RequestParam String name,@RequestParam String description,@RequestParam int stock,@RequestParam String color,@RequestParam Number price,@RequestParam ArrayList<Article> articles, @RequestParam SubCategory subCategory) {
+        return null;
+    }
 
-        List<Article> hmap = new ArrayList<Article>();
+    @GetMapping("/getAll")
+    public @ResponseBody Iterable<Article> getAllArticles() {
+
+        return articleRepository.findAll();
+
+        /*List<Article> hmap = new ArrayList<Article>();
         Article article = new Article();
         article.setId((long) 1);
         article.setName("RENBERGET");
@@ -305,6 +314,6 @@ public class ArticleController {
         listRating.add(rating);
         hmap.add(article);
 
-        return hmap;
+        return hmap;*/
     }
 }

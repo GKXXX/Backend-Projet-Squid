@@ -3,14 +3,15 @@ package entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name="images")
 public class Image {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="url")
+
     private String url;
     @ManyToOne
-    @JoinColumn(name="articleId")
+    @JoinColumn(name="id")
     private Article article;
 
     public Long getId() {

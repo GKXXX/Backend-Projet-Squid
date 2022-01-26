@@ -4,29 +4,30 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "articles")
 public class Article {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="name")
+
     private String name;
-    @Column(name="description")
+
     private String description;
-    @Column(name="stock")
+
     private int stock;
-    @Column(name="color")
+
     private String color;
-    @Column(name="price")
+
     private Number price;
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "id_article")
     private Set<Image> images;
-    @ManyToMany(mappedBy = "articles")
+    @ManyToMany(mappedBy = "id_article")
     private Set<SubCategory> subCategories;
-    @ManyToMany(mappedBy ="articles")
+    @ManyToMany(mappedBy ="id_article")
     private Set<Order> orders;
-    @ManyToMany(mappedBy = "favorites")
+    @ManyToMany(mappedBy = "id_favorite")
     private Set<Customer> favorites;
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "id_article")
     private Set<Rating> ratings;
 
     public Long getId() {

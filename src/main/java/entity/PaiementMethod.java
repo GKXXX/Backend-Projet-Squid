@@ -3,22 +3,23 @@ package entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name="paiement_methods")
 public class PaiementMethod {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="type")
+
     private String type;
-    @Column(name="number")
+
     private int number;
-    @Column(name="expirationDate")
+
     private String expirationDate;
-    @Column(name="name")
+
     private String nom;
-    @Column(name="firstName")
+
     private String firstName;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="customerId",referencedColumnName = "id")
+    @JoinColumn(name="id_customer",referencedColumnName = "id")
     private Customer customer;
 
     public Long getId() {

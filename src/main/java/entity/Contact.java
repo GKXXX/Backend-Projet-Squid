@@ -4,17 +4,18 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "contacts")
 public class Contact {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "subject", length = 150)
+
     private String subject;
     @Lob
-    @Column(name="message")
+
     private String message;
     @ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "id")
     private Customer customer;
 
     public String getMessage() {

@@ -1,19 +1,17 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "categories")
 public class Category {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="name")
+
     private String name;
-    @OneToMany(mappedBy="category")
+    @OneToMany(mappedBy="id_category")
     private Set<SubCategory> subCategories;
 
 

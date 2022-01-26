@@ -4,41 +4,40 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name="customers")
 public class Customer {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @Column(name = "mail", unique = true, length = 100)
+
     private String mail;
-    @Column(name = "password", length = 50)
+
     private String password;
-    @Column(name = "name", length = 50)
+
     private String name;
-    @Column(name = "firstName", length = 50)
+
     private String firstName;
-    @Column(name = "address", length = 150)
+
     private String address;
-    @Column(name = "city", length = 100)
+
     private String city;
-    @Column(name="postalCode")
+
     private int postalCode;
-    @Column(name = "adressComment", length = 200)
+
     private String addressComment;
     @ManyToOne
-    @JoinColumn(name="roleId")
+    @JoinColumn(name="id_role")
     private Role role;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "id_customer")
     private Set<Contact> contacts;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="paiementMethodId",referencedColumnName = "id")
-    private PaiementMethod paiementMethod;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "id_customer")
+    private Set<PaiementMethod> paiementMethod;
+    @OneToMany(mappedBy = "id_customer")
     private Set<Order> orders;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "favorite",joinColumns = {@JoinColumn(name = "customerId")}, inverseJoinColumns = {@JoinColumn(name = "articleId")})
+    @JoinTable(name = "favorites",joinColumns = {@JoinColumn(name = "id_customer")}, inverseJoinColumns = {@JoinColumn(name = "id_article")})
     private Set<Article> favorites;
-    @OneToMany( mappedBy = "customer")
+    @OneToMany( mappedBy = "id_customer")
     private Set<Rating> ratings;
 
 

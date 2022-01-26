@@ -4,19 +4,20 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name="sub_categories")
 public class SubCategory {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="name")
+
     private String name;
     @ManyToOne
-    @JoinColumn(name="categoryId")
+    @JoinColumn(name="id_category")
     private Category category;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="SubCategoryToProduct",
-            joinColumns = {@JoinColumn(name="subCategoryId")},
-            inverseJoinColumns = {@JoinColumn(name="articleId")})
+    @JoinTable(name="article_to_sub_category",
+            joinColumns = {@JoinColumn(name="id_sub_category")},
+            inverseJoinColumns = {@JoinColumn(name="id_article")})
     private Set<Article> articles;
 
     public Long getId() {

@@ -1,17 +1,16 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.annotation.processing.Generated;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name="roles")
 public class Role {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name", length = 50)
+
     private String name;
     @OneToMany(mappedBy="role")
     private Set<Customer> customers;

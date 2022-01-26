@@ -3,17 +3,18 @@ package entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name="ratings")
 public class Rating {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "rating")
+
     private float rating;
     @ManyToOne
-    @JoinColumn(name="articleId")
+    @JoinColumn(name="id_article")
     private Article article;
     @ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "id_customer")
     private Customer customer;
 
     public Long getId() {
