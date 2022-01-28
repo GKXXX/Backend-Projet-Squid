@@ -13,25 +13,22 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-@Controller
+@RestController
 @RequestMapping("/articles")
 public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
-    private static final String template = "Hello World";
-    private final AtomicLong counter = new AtomicLong();
 
     @PostMapping("/postArticle")
     public @ResponseBody String addNewArticle(@RequestParam String name,@RequestParam String description,@RequestParam int stock,@RequestParam String color,@RequestParam Number price,@RequestParam ArrayList<Article> articles, @RequestParam SubCategory subCategory) {
         return null;
     }
 
-    @GetMapping("/getAll")
-    public @ResponseBody Iterable<Article> getAllArticles() {
-
-        return articleRepository.findAll();
-
+    @GetMapping("/get")
+    public @ResponseBody String getAllArticles() {
+        return "hello world";
+       // return articleRepository.findAll();
         /*List<Article> hmap = new ArrayList<Article>();
         Article article = new Article();
         article.setId((long) 1);
