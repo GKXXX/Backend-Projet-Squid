@@ -1,15 +1,12 @@
 package controllers;
 
-import entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import entity.Article;
+import entity.Greeting;
+import entity.SubCategory;
 import org.springframework.web.bind.annotation.*;
 import repositories.ArticleRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -17,17 +14,38 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping("/articles")
 public class ArticleController {
 
-    @Autowired
-    private ArticleRepository articleRepository;
+
+
+    private final ArticleRepository articleRepository;
+
+    private static final String template = "Hello, %s!";
+    private final AtomicLong counter = new AtomicLong();
+
+    public ArticleController(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
 
     @PostMapping("/postArticle")
-    public @ResponseBody String addNewArticle(@RequestParam String name,@RequestParam String description,@RequestParam int stock,@RequestParam String color,@RequestParam Number price,@RequestParam ArrayList<Article> articles, @RequestParam SubCategory subCategory) {
+    public @ResponseBody
+    String addNewArticle(@RequestParam String name, @RequestParam String description, @RequestParam int stock, @RequestParam String color, @RequestParam Number price, @RequestParam ArrayList<Article> articles, @RequestParam SubCategory subCategory) {
         return null;
     }
 
+
+
+    @GetMapping("/greeting")
+    public Greeting greeting() {
+        return new Greeting(counter.incrementAndGet(), String.format(template, "Jass"));
+    }
+
     @GetMapping("/get")
-    public @ResponseBody String getAllArticles() {
-        return "hello world";
+    public String getAllArticles() {
+        try {
+            return "hello world";
+        } catch (Exception e) {
+            return e.toString();
+        }
+
        // return articleRepository.findAll();
         /*List<Article> hmap = new ArrayList<Article>();
         Article article = new Article();
