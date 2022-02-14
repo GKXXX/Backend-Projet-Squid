@@ -1,6 +1,7 @@
-package com.example.testsqljppptn.entity;
+package com.example.testsqljppptn.controllers;
 
 public class Greeting {
+
     private final long id;
     private final String content;
 
@@ -9,10 +10,9 @@ public class Greeting {
         this.content = content;
     }
 
-    public long getId() {
+    public long getId(){
         return id;
     }
-
     public String getContent() {
         return content;
     }
