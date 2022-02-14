@@ -1,4 +1,4 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_article;
 
     private String name;
 
@@ -19,23 +19,23 @@ public class Article {
     private String color;
 
     private Number price;
-    @OneToMany(mappedBy = "id_article")
+    @OneToMany(mappedBy = "id_image")
     private Set<Image> images;
-    @ManyToMany(mappedBy = "id_article")
+    @ManyToMany(mappedBy = "articles")
     private Set<SubCategory> subCategories;
-    @ManyToMany(mappedBy ="id_article")
+    @ManyToMany(mappedBy ="articles")
     private Set<Order> orders;
-    @ManyToMany(mappedBy = "id_favorite")
+    @ManyToMany(mappedBy = "favorites")
     private Set<Customer> favorites;
-    @OneToMany(mappedBy = "id_article")
+    @OneToMany(mappedBy = "id_rating")
     private Set<Rating> ratings;
 
     public Long getId() {
-        return id;
+        return id_article;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long id_article) {
+        this.id_article = id_article;
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package controllers;
+package com.example.testsqljppptn.controllers;
 
 public class Greeting {
 

@@ -1,6 +1,5 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,7 +8,7 @@ import java.util.Set;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_role;
 
     private String name;
     @OneToMany(mappedBy="role")
@@ -19,11 +18,11 @@ public class Role {
         return name;
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_role() {
+        return id_role;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_role(Long id) {
+        this.id_role = id;
     }
 }

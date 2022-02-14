@@ -1,4 +1,4 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
 
@@ -7,19 +7,19 @@ import javax.persistence.*;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_image;
 
     private String url;
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="id_article")
     private Article article;
 
-    public Long getId() {
-        return id;
+    public Long getId_image() {
+        return id_image;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_image(Long id) {
+        this.id_image = id;
     }
 
     public String getUrl() {

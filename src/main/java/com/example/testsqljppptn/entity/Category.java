@@ -1,4 +1,4 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,19 +8,19 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_category;
 
     private String name;
-    @OneToMany(mappedBy="id_category")
+    @OneToMany(mappedBy="id_sub_category")
     private Set<SubCategory> subCategories;
 
 
-    public Long getId() {
-        return id;
+    public Long getId_category() {
+        return id_category;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_category(Long id) {
+        this.id_category = id;
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_order;
 
     private Number totalAmmount;
 
@@ -22,11 +22,11 @@ public class Order {
     @JoinColumn(name="id")
     private Customer customer;
 
-    public Long getId() {
-        return id;
+    public Long getId_order() {
+        return id_order;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_order(Long id) {
+        this.id_order = id;
     }
 }

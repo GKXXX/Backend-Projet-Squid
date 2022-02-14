@@ -1,4 +1,4 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
 public class Customer {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private Long id_customer;
 
     private String mail;
 
@@ -28,16 +28,16 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name="id_role")
     private Role role;
-    @OneToMany(mappedBy = "id_customer")
+    @OneToMany(mappedBy = "id_contact")
     private Set<Contact> contacts;
-    @OneToMany(mappedBy = "id_customer")
+    @OneToMany(mappedBy = "id_paiement_method")
     private Set<PaiementMethod> paiementMethod;
-    @OneToMany(mappedBy = "id_customer")
+    @OneToMany(mappedBy = "id_order")
     private Set<Order> orders;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "favorites",joinColumns = {@JoinColumn(name = "id_customer")}, inverseJoinColumns = {@JoinColumn(name = "id_article")})
     private Set<Article> favorites;
-    @OneToMany( mappedBy = "id_customer")
+    @OneToMany( mappedBy = "id_rating")
     private Set<Rating> ratings;
 
 
@@ -70,11 +70,11 @@ public class Customer {
         return mail;
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_customer() {
+        return id_customer;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_customer(Long id) {
+        this.id_customer = id;
     }
 }

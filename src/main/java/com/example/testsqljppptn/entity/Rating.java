@@ -1,4 +1,4 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
 
@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_rating;
 
     private float rating;
     @ManyToOne
@@ -17,12 +17,12 @@ public class Rating {
     @JoinColumn(name = "id_customer")
     private Customer customer;
 
-    public Long getId() {
-        return id;
+    public Long getId_rating() {
+        return id_rating;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_rating(Long id) {
+        this.id_rating = id;
     }
 
     public float getRating() {

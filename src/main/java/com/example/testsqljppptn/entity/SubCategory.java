@@ -1,4 +1,4 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
 public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_sub_category;
 
     private String name;
     @ManyToOne
@@ -20,12 +20,12 @@ public class SubCategory {
             inverseJoinColumns = {@JoinColumn(name="id_article")})
     private Set<Article> articles;
 
-    public Long getId() {
-        return id;
+    public Long getId_sub_category() {
+        return id_sub_category;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_sub_category(Long id) {
+        this.id_sub_category = id;
     }
 
     public String getName() {

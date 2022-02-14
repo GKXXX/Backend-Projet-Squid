@@ -1,21 +1,21 @@
-package entity;
+package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "contacts")
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_contact;
 
     private String subject;
-    @Lob
+
 
     private String message;
+
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idcustomer")
     private Customer customer;
 
     public String getMessage() {
@@ -26,11 +26,11 @@ public class Contact {
         return subject;
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_contact() {
+        return id_contact;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_contact(Long id) {
+        this.id_contact = id;
     }
 }
