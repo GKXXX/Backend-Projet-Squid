@@ -19,15 +19,15 @@ public class Article {
     private String color;
 
     private Number price;
-    @OneToMany(mappedBy = "id_image")
+    @OneToMany(mappedBy = "id_image",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Image> images;
-    @ManyToMany(mappedBy = "articles")
+    @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<SubCategory> subCategories;
     @ManyToMany(mappedBy ="articles")
     private Set<Order> orders;
     @ManyToMany(mappedBy = "favorites")
     private Set<Customer> favorites;
-    @OneToMany(mappedBy = "id_rating")
+    @OneToMany(mappedBy = "id_rating",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Rating> ratings;
 
     public Long getId() {
