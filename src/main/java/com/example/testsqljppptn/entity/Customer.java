@@ -34,7 +34,7 @@ public class Customer {
     private Set<PaiementMethod> paiementMethod;
     @OneToMany(mappedBy = "id_order")
     private Set<Order> orders;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "favorites",joinColumns = {@JoinColumn(name = "id_customer")}, inverseJoinColumns = {@JoinColumn(name = "id_article")})
     private Set<Article> favorites;
     @OneToMany( mappedBy = "id_rating")

@@ -15,10 +15,10 @@ public class Order {
     private String shipperyState;
 
     private String paiementMethod;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(name="order_to_article",joinColumns = {@JoinColumn(name="id")}, inverseJoinColumns = {@JoinColumn(name="id_article")})
     private Set<Article> articles;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id")
     private Customer customer;
 
