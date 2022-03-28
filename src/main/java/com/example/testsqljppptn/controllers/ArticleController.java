@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/articles")
 public class ArticleController {
