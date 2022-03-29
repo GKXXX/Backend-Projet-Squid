@@ -8,7 +8,7 @@ import java.util.Set;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_article;
+    private int id_article;
 
     private String name;
 
@@ -18,9 +18,24 @@ public class Article {
 
     private String color;
 
-    private Number price;
-    @OneToMany(mappedBy = "id_image",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Long price;
+    @OneToMany(mappedBy = "id_image",cascade = CascadeType.ALL)
     private Set<Image> images;
+
+    public Article() {
+    }
+
+    public Article(int id_article, String name, String description, int stock, String color, Long price, Set<Image> images) {
+        this.id_article = id_article;
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+        this.color = color;
+        this.price = price;
+        this.images = images;
+    }
+
+    /**
     @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<SubCategory> subCategories;
     @ManyToMany(mappedBy ="articles")
@@ -28,13 +43,15 @@ public class Article {
     @ManyToMany(mappedBy = "favorites")
     private Set<Customer> favorites;
     @OneToMany(mappedBy = "id_rating",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<Rating> ratings;
+    private Set<Rating> ratings;*/
 
-    public Long getId() {
+
+
+    public int getId() {
         return id_article;
     }
 
-    public void setId(Long id_article) {
+    public void setId(int id_article) {
         this.id_article = id_article;
     }
 
@@ -70,11 +87,11 @@ public class Article {
         this.color = color;
     }
 
-    public Number getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Number price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
@@ -85,7 +102,7 @@ public class Article {
     public void setImages(Set<Image> images) {
         this.images = images;
     }
-
+/**
     public Set<SubCategory> getSubCategories() {
         return subCategories;
     }
@@ -116,5 +133,5 @@ public class Article {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
-    }
+    }*/
 }

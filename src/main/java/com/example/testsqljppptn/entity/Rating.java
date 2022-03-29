@@ -10,6 +10,7 @@ public class Rating {
     private Long id_rating;
 
     private float rating;
+
     @ManyToOne
     @JoinColumn(name="id_article")
     private Article article;
