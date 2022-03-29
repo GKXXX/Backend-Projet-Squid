@@ -322,6 +322,7 @@ public class ArticleController {
     @GetMapping("/createData")
     public @ResponseBody String createData() {
         Article testArticle = new Article("test","description de test",1,"Blue",Long.valueOf(99));
+        articleRepository.save(testArticle);
         return "Done.";
     }
 }
