@@ -43,6 +43,15 @@ public class Article {
         this.price = price;
     }
 
+    public Article(String name, String description, int stock, String color, Long price, Set<Image> images) {
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+        this.color = color;
+        this.price = price;
+        this.images = images;
+    }
+
     /**
     @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<SubCategory> subCategories;

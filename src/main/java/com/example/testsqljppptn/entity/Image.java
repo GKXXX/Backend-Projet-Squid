@@ -30,6 +30,9 @@ public class Image {
         this.url = url;
         this.article = article;
     }
+    public Image(String url) {
+        this.url = url;
+    }
 
     public Long getId_image() {
         return id_image;

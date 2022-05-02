@@ -321,7 +321,9 @@ public class ArticleController {
     }
     @GetMapping("/createData")
     public @ResponseBody String createData() {
-        Article testArticle = new Article("test","description de test",1,"Blue",Long.valueOf(99));
+        Set<Image> listImage = new HashSet<Image>();
+        listImage.add(new Image("https://www.ikea.com/fr/fr/images/products/taernoe-table-exterieur-noir-teinte-brun-clair__0735751_pe740159_s5.jpg?f=xl"));
+        Article testArticle = new Article("test","description de test",1,"Blue",Long.valueOf(99),listImage);
         articleRepository.save(testArticle);
         return "Done.";
     }
