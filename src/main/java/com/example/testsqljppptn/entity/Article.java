@@ -7,7 +7,7 @@ import java.util.Set;
 @Table(name = "articles")
 public class Article {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id_article;
 
     private String name;
@@ -21,6 +21,14 @@ public class Article {
     private Long price;
     @OneToMany(mappedBy = "id_image",cascade = CascadeType.ALL)
     private Set<Image> images;
+    @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL)
+    private Set<SubCategory> subCategories;
+    @ManyToMany(mappedBy ="articles")
+    private Set<Order> orders;
+    @ManyToMany(mappedBy = "favorites")
+    private Set<Customer> favorites;
+    @OneToMany(mappedBy = "id_rating",cascade = CascadeType.ALL)
+    private Set<Rating> ratings;
 
     public Article() {
     }
@@ -52,15 +60,8 @@ public class Article {
         this.images = images;
     }
 
-    /**
-    @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<SubCategory> subCategories;
-    @ManyToMany(mappedBy ="articles")
-    private Set<Order> orders;
-    @ManyToMany(mappedBy = "favorites")
-    private Set<Customer> favorites;
-    @OneToMany(mappedBy = "id_rating",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<Rating> ratings;*/
+
+
 
 
 

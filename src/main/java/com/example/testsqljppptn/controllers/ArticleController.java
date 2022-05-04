@@ -2,6 +2,7 @@ package com.example.testsqljppptn.controllers;
 
 import com.example.testsqljppptn.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.testsqljppptn.repositories.ArticleRepository;
 
@@ -18,8 +19,9 @@ public class ArticleController {
     private ArticleRepository articleRepository;
 
     @PostMapping("/postArticle")
-    public @ResponseBody String addNewArticle(@RequestParam String name, @RequestParam String description, @RequestParam int stock, @RequestParam String color, @RequestParam Number price, @RequestParam ArrayList<Article> articles, @RequestParam SubCategory subCategory) {
-        return null;
+    public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article) {
+        articleRepository.save(article);
+        return ResponseEntity.ok().body("article created.");
     }
 
     /**public @ResponseBody String postFalseData() {

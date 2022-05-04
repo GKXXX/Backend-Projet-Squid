@@ -40,7 +40,10 @@ public class Customer {
     @OneToMany( mappedBy = "id_rating")
     private Set<Rating> ratings;
 
-
+    public Customer(String mail, String password) {
+        this.mail = mail;
+        this.password = password;
+    }
 
     public String getAddressComment() {
         return addressComment;
