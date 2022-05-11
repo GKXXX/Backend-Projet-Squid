@@ -4,6 +4,7 @@ import com.example.testsqljppptn.entity.Article;
 import com.example.testsqljppptn.entity.Customer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -27,6 +28,6 @@ public interface CustomerRepository extends CrudRepository<Customer,Integer> {
     @Override
     void deleteAllById(Iterable<? extends Integer> integers);
 
-    @Query(value = "SELECT * FROM customers WHERE 'mail' = ':mail'", nativeQuery = true)
-    Optional<Customer> findByMail(String mail);
+    @Query(value = "SELECT * FROM customers c WHERE c.mail = :mail", nativeQuery = true)
+    Optional<Customer> findByMail(@Param("mail") String mail);
 }

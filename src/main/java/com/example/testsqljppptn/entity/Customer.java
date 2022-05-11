@@ -45,6 +45,12 @@ public class Customer {
         this.password = password;
     }
 
+    public Customer() {
+
+    }
+
+
+
     public String getAddressComment() {
         return addressComment;
     }
@@ -79,5 +85,9 @@ public class Customer {
 
     public void setId_customer(Long id) {
         this.id_customer = id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
