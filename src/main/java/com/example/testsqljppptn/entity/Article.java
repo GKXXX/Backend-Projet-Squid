@@ -21,14 +21,13 @@ public class Article {
     private Long price;
     @OneToMany(mappedBy = "id_image",cascade = CascadeType.ALL)
     private Set<Image> images;
-    @ManyToMany(mappedBy = "articles",cascade = CascadeType.ALL)
-    private Set<SubCategory> subCategories;
     @ManyToMany(mappedBy ="articles")
     private Set<Order> orders;
     @ManyToMany(mappedBy = "favorites")
     private Set<Customer> favorites;
     @OneToMany(mappedBy = "id_rating",cascade = CascadeType.ALL)
     private Set<Rating> ratings;
+
 
     public Article() {
     }
@@ -41,6 +40,17 @@ public class Article {
         this.color = color;
         this.price = price;
         this.images = images;
+    }
+
+    public Article(int id_article, String name, String description, int stock, String color, Long price, Set<Image> images, Set<Rating> ratings) {
+        this.id_article = id_article;
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+        this.color = color;
+        this.price = price;
+        this.images = images;
+        this.ratings = ratings;
     }
 
     public Article(String name, String description, int stock, String color, Long price) {
@@ -144,12 +154,13 @@ public class Article {
     public void setFavorites(Set<Customer> favorites) {
         this.favorites = favorites;
     }
-
+    */
     public Set<Rating> getRatings() {
         return ratings;
     }
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
-    }*/
+    }
+
 }

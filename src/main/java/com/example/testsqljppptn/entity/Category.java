@@ -11,8 +11,11 @@ public class Category {
     private Long id_category;
 
     private String name;
-    @OneToMany(mappedBy="id_sub_category")
-    private Set<SubCategory> subCategories;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="article_to_category",
+            joinColumns = {@JoinColumn(name="id_category")},
+            inverseJoinColumns = {@JoinColumn(name="id_article")})
+    private Set<Article> articles;
 
 
     public Long getId_category() {
