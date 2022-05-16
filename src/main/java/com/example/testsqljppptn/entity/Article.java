@@ -21,12 +21,17 @@ public class Article {
     private Long price;
     @OneToMany(mappedBy = "id_image",cascade = CascadeType.ALL)
     private Set<Image> images;
-    @ManyToMany(mappedBy ="articles")
+    @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
     private Set<Order> orders;
-    @ManyToMany(mappedBy = "favorites")
+    @ManyToMany(mappedBy = "favorites",fetch = FetchType.EAGER)
     private Set<Customer> favorites;
     @OneToMany(mappedBy = "id_rating",cascade = CascadeType.ALL)
     private Set<Rating> ratings;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="article_to_category",
+            joinColumns = {@JoinColumn(name="id_article")},
+            inverseJoinColumns = {@JoinColumn(name="id_category")})
+    private Set<Category> categories;
 
 
     public Article() {
@@ -131,13 +136,6 @@ public class Article {
         this.images = images;
     }
 /**
-    public Set<SubCategory> getSubCategories() {
-        return subCategories;
-    }
-
-    public void setSubCategories(Set<SubCategory> subCategories) {
-        this.subCategories = subCategories;
-    }
 
     public Set<Order> getOrders() {
         return orders;
