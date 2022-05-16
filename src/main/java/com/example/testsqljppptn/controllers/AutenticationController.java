@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class AutenticationController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @PostMapping("/connection")
+    @PostMapping(value = "/connection",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity connect(@RequestBody Customer connectingCustomerInfo) {
         Optional<Customer> loggingCustomer = customerRepository.findByMail(connectingCustomerInfo.getMail());
         System.out.println(connectingCustomerInfo.getMail());
@@ -54,7 +55,7 @@ public class AutenticationController {
                 throw exception;
             }
 
-            return ResponseEntity.ok().body("{'token':'" + token + "'}");
+            return ResponseEntity.ok().body( token );
         } else {
             return ResponseEntity.ok().body("Mot de passe incorrect");
          }
