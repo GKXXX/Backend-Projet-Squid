@@ -34,7 +34,7 @@ public class AutenticationController {
         System.out.println(connectingCustomerInfo.getMail());
         System.out.println(loggingCustomer.isPresent());
         if (!loggingCustomer.isPresent()) {
-            return ResponseEntity.ok("utilisateur introuvable");
+            return ResponseEntity.internalServerError().body("utilisateur introuvable");
         }
         String hashedPassword = "";
         try {
@@ -44,7 +44,7 @@ public class AutenticationController {
             hashedPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.ok().body("Erreur lors de l'encodage du mdp.");
+            return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
         }
         if (loggingCustomer.get().getPassword().equals(hashedPassword)) {
             String token = "";
@@ -57,7 +57,7 @@ public class AutenticationController {
 
             return ResponseEntity.ok().body( token );
         } else {
-            return ResponseEntity.ok().body("Mot de passe incorrect");
+            return ResponseEntity.internalServerError().body("Mot de passe incorrect");
          }
 
     }
