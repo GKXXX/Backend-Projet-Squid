@@ -28,6 +28,7 @@ public class AutenticationController {
     public ResponseEntity connect(@RequestBody Customer connectingCustomerInfo) {
         Optional<Customer> loggingCustomer = customerRepository.findByMail(connectingCustomerInfo.getMail());
         System.out.println(connectingCustomerInfo.getMail());
+        System.out.println(loggingCustomer.isPresent());
         if (!loggingCustomer.isPresent()) {
             return ResponseEntity.ok("utilisateur introuvable");
         }
