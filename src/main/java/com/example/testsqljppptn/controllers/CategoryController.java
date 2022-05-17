@@ -21,6 +21,11 @@ public class CategoryController {
         return categoryRepository.findAll();
     }
 
+    @GetMapping("/byId")
+    public Optional<Category> getById(@RequestParam Long idCategory) {
+        return categoryRepository.findById(idCategory); 
+    }
+
     @PostMapping()
     public ResponseEntity addCategory(@RequestBody Category category) {
         categoryRepository.save(category);
