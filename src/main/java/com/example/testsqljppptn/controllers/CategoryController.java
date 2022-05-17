@@ -23,7 +23,7 @@ public class CategoryController {
 
     @GetMapping("/byId")
     public Optional<Category> getById(@RequestParam Long idCategory) {
-        return categoryRepository.findById(idCategory); 
+        return categoryRepository.findById(idCategory);
     }
 
     @PostMapping()

@@ -70,25 +70,25 @@ public class ArticleController {
     public @ResponseBody ResponseEntity editArticle(@RequestBody Article article) {
         Optional<Article > articleToEdit = articleRepository.findById(article.getId());
         if (articleToEdit.isPresent()) {
-            if (!article.getName().equals(articleToEdit.get().getName())) {
+            if (article.getName() != null) {
                 articleToEdit.get().setName(article.getName());
             }
-            if (!article.getDescription().equals(articleToEdit.get().getDescription())) {
+            if (article.getDescription() != null) {
                 articleToEdit.get().setDescription(article.getDescription());
             }
-            if (!article.getColor().equals(articleToEdit.get().getColor())) {
+            if (article.getColor() != null) {
                 articleToEdit.get().setColor(article.getDescription());
             }
-            if (!article.getPrice().equals(articleToEdit.get().getPrice())) {
+            if (article.getPrice() != null) {
                 articleToEdit.get().setPrice(article.getPrice());
             }
-            if (article.getStock() != articleToEdit.get().getStock()) {
+            if (article.getStock() != 0) {
                 articleToEdit.get().setStock(article.getStock());
             }
-            if (article.getImages().size() != articleToEdit.get().getImages().size()){
+            if (article.getImages() != null){
                 articleToEdit.get().setImages(article.getImages());
             }
-            if(article.getCategories().size() != articleToEdit.get().getCategories().size()) {
+            if(article.getCategories() != null ) {
                 articleToEdit.get().setCategories(article.getCategories());
             }
             articleRepository.save(articleToEdit.get());

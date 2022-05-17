@@ -24,6 +24,8 @@ public class Customer {
 
     private int postalCode;
 
+    private boolean isAdmin;
+
     private String addressComment;
     @ManyToOne
     @JoinColumn(name="id_role")
@@ -89,5 +91,13 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
