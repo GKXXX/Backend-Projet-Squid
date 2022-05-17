@@ -34,7 +34,7 @@ public class AutenticationController {
         System.out.println(connectingCustomerInfo.getMail());
         System.out.println(loggingCustomer.isPresent());
         if (!loggingCustomer.isPresent()) {
-            return ResponseEntity.internalServerError().body("utilisateur introuvable");
+            return ResponseEntity.notFound().build();
         }
         String hashedPassword = "";
         try {
@@ -66,7 +66,7 @@ public class AutenticationController {
     public ResponseEntity inscription(@RequestBody Customer registeringCustomerInfo) {
         Iterable<Customer> listCustomer = customerRepository.findAll();
         if(IsUserAlreadyExist(listCustomer,registeringCustomerInfo.getMail())) {
-            return ResponseEntity.ok().body("Already existing user.");
+            return ResponseEntity.internalServerError().body("Already existing user.");
         }
         String hashedPassword = "";
         try {
@@ -76,7 +76,7 @@ public class AutenticationController {
             hashedPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.ok().body("Erreur lors de l'encodage du mdp.");
+            return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
         }
         registeringCustomerInfo.setPassword(hashedPassword);
         customerRepository.save(registeringCustomerInfo);

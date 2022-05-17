@@ -161,4 +161,11 @@ public class Article {
         this.ratings = ratings;
     }
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
 }

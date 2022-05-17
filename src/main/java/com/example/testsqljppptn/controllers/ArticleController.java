@@ -65,12 +65,37 @@ public class ArticleController {
             return "Id not specified";
         }
     }
-    @GetMapping("/createData")
-    public @ResponseBody String createData() {
-        Set<Image> listImage = new HashSet<Image>();
-        listImage.add(new Image("https://www.ikea.com/fr/fr/images/products/taernoe-table-exterieur-noir-teinte-brun-clair__0735751_pe740159_s5.jpg?f=xl"));
-        Article testArticle = new Article("test","description de test",1,"Blue",Long.valueOf(99),listImage);
-        articleRepository.save(testArticle);
-        return "Done.";
+
+    @PutMapping()
+    public @ResponseBody ResponseEntity editArticle(@RequestBody Article article) {
+        Optional<Article > articleToEdit = articleRepository.findById(article.getId());
+        if (articleToEdit.isPresent()) {
+            if (!article.getName().equals(articleToEdit.get().getName())) {
+                articleToEdit.get().setName(article.getName());
+            }
+            if (!article.getDescription().equals(articleToEdit.get().getDescription())) {
+                articleToEdit.get().setDescription(article.getDescription());
+            }
+            if (!article.getColor().equals(articleToEdit.get().getColor())) {
+                articleToEdit.get().setColor(article.getDescription());
+            }
+            if (!article.getPrice().equals(articleToEdit.get().getPrice())) {
+                articleToEdit.get().setPrice(article.getPrice());
+            }
+            if (article.getStock() != articleToEdit.get().getStock()) {
+                articleToEdit.get().setStock(article.getStock());
+            }
+            if (article.getImages().size() != articleToEdit.get().getImages().size()){
+                articleToEdit.get().setImages(article.getImages());
+            }
+            if(article.getCategories().size() != articleToEdit.get().getCategories().size()) {
+                articleToEdit.get().setCategories(article.getCategories());
+            }
+            articleRepository.save(articleToEdit.get());
+            return ResponseEntity.ok("Article edited.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
