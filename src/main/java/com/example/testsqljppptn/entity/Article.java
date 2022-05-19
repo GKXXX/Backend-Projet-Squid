@@ -1,6 +1,7 @@
 package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -19,19 +20,17 @@ public class Article {
     private String color;
 
     private Long price;
-    @OneToMany(mappedBy = "id_image",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id_image",cascade = CascadeType.MERGE)
     private Set<Image> images;
     @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
     private Set<Order> orders;
     @ManyToMany(mappedBy = "favorites",fetch = FetchType.EAGER)
     private Set<Customer> favorites;
-    @OneToMany(mappedBy = "id_rating",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "rating",cascade = CascadeType.MERGE)
     private Set<Rating> ratings;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="article_to_category",
-            joinColumns = {@JoinColumn(name="id_article")},
-            inverseJoinColumns = {@JoinColumn(name="id_category")})
-    private Set<Category> categories;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_category",referencedColumnName = "id_category")
+    private Category category;
 
 
     public Article() {
@@ -74,6 +73,7 @@ public class Article {
         this.price = price;
         this.images = images;
     }
+
 
 
 
@@ -161,11 +161,11 @@ public class Article {
         this.ratings = ratings;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category categories) {
+        this.category = categories;
     }
 }

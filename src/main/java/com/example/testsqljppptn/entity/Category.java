@@ -11,10 +11,7 @@ public class Category {
     private Long id_category;
 
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="article_to_category",
-            joinColumns = {@JoinColumn(name="id_category")},
-            inverseJoinColumns = {@JoinColumn(name="id_article")})
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private Set<Article> articles;
 
 
@@ -34,5 +31,11 @@ public class Category {
         this.name = name;
     }
 
+    public Set<Article> getArticles() {
+        return articles;
+    }
 
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
+    }
 }

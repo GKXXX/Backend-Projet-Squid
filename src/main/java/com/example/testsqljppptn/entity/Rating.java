@@ -1,6 +1,7 @@
 package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="ratings")
@@ -12,10 +13,10 @@ public class Rating {
     private float rating;
 
     @ManyToOne
-    @JoinColumn(name="id_article")
+    @JoinColumn(name = "id_article",referencedColumnName = "id_article")
     private Article article;
     @ManyToOne
-    @JoinColumn(name = "id_customer")
+    @JoinColumn(name = "id_customer",referencedColumnName = "id_customer")
     private Customer customer;
 
     public Long getId_rating() {

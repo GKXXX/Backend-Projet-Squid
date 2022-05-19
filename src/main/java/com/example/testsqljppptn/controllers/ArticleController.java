@@ -18,7 +18,7 @@ public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
-    @PostMapping("/postArticle")
+    @PostMapping()
     public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article) {
         articleRepository.save(article);
         return ResponseEntity.ok().body("article created.");
@@ -58,7 +58,7 @@ public class ArticleController {
 
     @GetMapping("/byId")
     public @ResponseBody
-    Object getArticleById(@PathParam("id") Optional<Integer> id) {
+    Object getArticleById(@RequestParam("id") Optional<Integer> id) {
         if (id.isPresent()) {
             return articleRepository.findById(id.get());
         } else {
@@ -88,8 +88,8 @@ public class ArticleController {
             if (article.getImages() != null){
                 articleToEdit.get().setImages(article.getImages());
             }
-            if(article.getCategories() != null ) {
-                articleToEdit.get().setCategories(article.getCategories());
+            if(article.getCategory() != null ) {
+                articleToEdit.get().setCategory(article.getCategory());
             }
             articleRepository.save(articleToEdit.get());
             return ResponseEntity.ok("Article edited.");
@@ -97,5 +97,11 @@ public class ArticleController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+    @DeleteMapping()
+    public ResponseEntity deleteArticle(@RequestParam("id") int id){
+        articleRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

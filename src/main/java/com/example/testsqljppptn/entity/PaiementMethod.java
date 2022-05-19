@@ -17,8 +17,10 @@ public class PaiementMethod {
 
     private String nom;
 
+    private String verificationCode;
+
     private String firstName;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="id_customer",referencedColumnName = "id_customer")
     private Customer customer;
 
@@ -36,14 +38,6 @@ public class PaiementMethod {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public int getNumero() {
-        return number;
-    }
-
-    public void setNumero(int numero) {
-        this.number = numero;
     }
 
     public String getExpirationDate() {
@@ -68,5 +62,29 @@ public class PaiementMethod {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
