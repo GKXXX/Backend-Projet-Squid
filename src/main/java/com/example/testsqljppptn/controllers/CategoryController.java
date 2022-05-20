@@ -46,4 +46,10 @@ public class CategoryController {
         }
     }
 
+    @DeleteMapping()
+    public ResponseEntity deleteCategory(@RequestParam Long id) {
+        categoryRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

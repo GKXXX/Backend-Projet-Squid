@@ -100,4 +100,56 @@ public class Customer {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setAddressComment(String addressComment) {
+        this.addressComment = addressComment;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public void setPaiementMethod(Set<PaiementMethod> paiementMethod) {
+        this.paiementMethod = paiementMethod;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void setFavorites(Set<Article> favorites) {
+        this.favorites = favorites;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
 }
