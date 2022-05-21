@@ -11,7 +11,7 @@ public class Category {
     private Long id_category;
 
     private String name;
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Article> articles;
 
 

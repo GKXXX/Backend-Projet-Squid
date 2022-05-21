@@ -20,7 +20,7 @@ public class Article {
     private String color;
 
     private Long price;
-    @OneToMany(mappedBy = "id_image",cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "id_image",cascade = CascadeType.PERSIST)
     private Set<Image> images;
     @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
     private Set<Order> orders;
