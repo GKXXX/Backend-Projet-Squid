@@ -28,6 +28,39 @@ public class AutenticationController {
     @Autowired
     private CustomerRepository customerRepository;
 
+
+    @PostMapping(value = "/connection_mobile",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity connectMobile(@RequestParam String email,@RequestParam String password) {
+        Optional<Customer> loggingCustomer = customerRepository.findByMail(email);
+        if (!loggingCustomer.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        String hashedPassword = "";
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
+            digest.reset();
+            digest.update(password.getBytes(StandardCharsets.UTF_8));
+            hashedPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
+        }
+        if (loggingCustomer.get().getPassword().equals(hashedPassword)) {
+            String token = "";
+            try {
+                Algorithm algorithm = Algorithm.HMAC512("Cadrillage-78");
+                token = JWT.create().withIssuer("auth0").sign(algorithm);
+            } catch (JWTCreationException exception) {
+                throw exception;
+            }
+
+            return ResponseEntity.ok().body( token );
+        } else {
+            return ResponseEntity.internalServerError().body("Mot de passe incorrect");
+        }
+
+    }
+
     @PostMapping(value = "/connection",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity connect(@RequestBody Customer connectingCustomerInfo) {
         Optional<Customer> loggingCustomer = customerRepository.findByMail(connectingCustomerInfo.getMail());
