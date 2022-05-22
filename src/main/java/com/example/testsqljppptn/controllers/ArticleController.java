@@ -1,6 +1,7 @@
 package com.example.testsqljppptn.controllers;
 
 import com.example.testsqljppptn.entity.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,7 @@ public class ArticleController {
         return listArticleToSend;
     }
 
+    @JsonIgnore
     @GetMapping()
     public @ResponseBody Iterable<Article> getAllArticles() {
         return articleRepository.findAll();
@@ -61,6 +63,7 @@ public class ArticleController {
         return articleRepository.findByCategory(id);
     }
 
+    @JsonIgnore
     @GetMapping("/byId")
     public @ResponseBody
     Object getArticleById(@RequestParam("id") Optional<Integer> id) {

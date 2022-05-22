@@ -1,5 +1,7 @@
 package com.example.testsqljppptn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,7 @@ public class PaiementMethod {
     private String verificationCode;
 
     private String firstName;
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="id_customer",referencedColumnName = "id")
     private Customer customer;

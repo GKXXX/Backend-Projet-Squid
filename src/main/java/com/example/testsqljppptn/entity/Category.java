@@ -1,5 +1,7 @@
 package com.example.testsqljppptn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,7 +13,8 @@ public class Category {
     private Long id;
 
     private String name;
-    @OneToMany(mappedBy = "category",cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "category",cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private Set<Article> articles;
 
 

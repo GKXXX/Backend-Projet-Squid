@@ -1,5 +1,7 @@
 package com.example.testsqljppptn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -27,9 +29,7 @@ public class Customer {
     private boolean isAdmin;
 
     private String addressComment;
-    @ManyToOne
-    @JoinColumn(name="id_role")
-    private Role role;
+    @JsonIgnore
     @OneToMany(mappedBy = "id")
     private Set<Contact> contacts;
     @OneToMany(mappedBy = "id")
@@ -39,6 +39,7 @@ public class Customer {
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "favorites",joinColumns = {@JoinColumn(name = "id_customer")}, inverseJoinColumns = {@JoinColumn(name = "id_article")})
     private Set<Article> favorites;
+    @JsonIgnore
     @OneToMany( mappedBy = "id")
     private Set<Rating> ratings;
 
@@ -127,10 +128,6 @@ public class Customer {
 
     public void setAddressComment(String addressComment) {
         this.addressComment = addressComment;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public void setContacts(Set<Contact> contacts) {

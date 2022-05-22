@@ -12,6 +12,7 @@ public class Rating {
 
     private float rating;
 
+    
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_article",referencedColumnName = "id")
     private Article article;

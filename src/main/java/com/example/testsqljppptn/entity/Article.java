@@ -1,5 +1,7 @@
 package com.example.testsqljppptn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -23,13 +25,15 @@ public class Article {
     private Float price;
     @OneToMany(mappedBy = "article",cascade = CascadeType.PERSIST)
     private Set<Image> images;
+    @JsonIgnore
     @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
     private Set<Order> orders;
+    @JsonIgnore
     @ManyToMany(mappedBy = "favorites",fetch = FetchType.EAGER)
     private Set<Customer> favorites;
     @OneToMany(mappedBy = "rating",cascade = CascadeType.MERGE)
     private Set<Rating> ratings;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "category",referencedColumnName = "id")
     private Category category;
 
@@ -136,7 +140,7 @@ public class Article {
     public void setImages(Set<Image> images) {
         this.images = images;
     }
-/**
+
 
     public Set<Order> getOrders() {
         return orders;
@@ -153,7 +157,7 @@ public class Article {
     public void setFavorites(Set<Customer> favorites) {
         this.favorites = favorites;
     }
-    */
+
     public Set<Rating> getRatings() {
         return ratings;
     }
