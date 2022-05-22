@@ -29,7 +29,7 @@ public class Article {
     private Set<Customer> favorites;
     @OneToMany(mappedBy = "rating",cascade = CascadeType.MERGE)
     private Set<Rating> ratings;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "category",referencedColumnName = "id")
     private Category category;
 
