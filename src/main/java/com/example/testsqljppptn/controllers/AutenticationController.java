@@ -30,7 +30,7 @@ public class AutenticationController {
 
 
     @PostMapping(value = "/connection_mobile",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity connectMobile(@RequestParam String email,@RequestParam String password) {
+    public ResponseEntity connectMobile(@RequestBody String email,@RequestBody String password) {
         Optional<Customer> loggingCustomer = customerRepository.findByMail(email);
         if (!loggingCustomer.isPresent()) {
             return ResponseEntity.notFound().build();
