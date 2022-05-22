@@ -1,6 +1,7 @@
 package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class Article {
 
     private String color;
 
-    private Long price;
+    private Float price;
     @OneToMany(mappedBy = "article",cascade = CascadeType.PERSIST)
     private Set<Image> images;
     @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
@@ -36,7 +37,7 @@ public class Article {
     public Article() {
     }
 
-    public Article(int id_article, String name, String description, int stock, String color, Long price, Set<Image> images) {
+    public Article(int id_article, String name, String description, int stock, String color, Float price, Set<Image> images) {
         this.id = id_article;
         this.name = name;
         this.description = description;
@@ -46,7 +47,7 @@ public class Article {
         this.images = images;
     }
 
-    public Article(int id_article, String name, String description, int stock, String color, Long price, Set<Image> images, Set<Rating> ratings) {
+    public Article(int id_article, String name, String description, int stock, String color, Float price, Set<Image> images, Set<Rating> ratings) {
         this.id = id_article;
         this.name = name;
         this.description = description;
@@ -57,7 +58,7 @@ public class Article {
         this.ratings = ratings;
     }
 
-    public Article(String name, String description, int stock, String color, Long price) {
+    public Article(String name, String description, int stock, String color, Float price) {
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -65,7 +66,7 @@ public class Article {
         this.price = price;
     }
 
-    public Article(String name, String description, int stock, String color, Long price, Set<Image> images) {
+    public Article(String name, String description, int stock, String color, Float price, Set<Image> images) {
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -120,11 +121,11 @@ public class Article {
         this.color = color;
     }
 
-    public Long getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

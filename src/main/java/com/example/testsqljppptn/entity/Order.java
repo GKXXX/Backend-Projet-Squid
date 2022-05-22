@@ -10,7 +10,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Number totalAmmount;
+    private Float totalAmmount;
 
     private String shipperyState;
 

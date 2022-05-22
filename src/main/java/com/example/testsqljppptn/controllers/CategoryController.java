@@ -39,7 +39,7 @@ public class CategoryController {
             if (!categoryToEdit.get().getName().equals(category.getName())) {
                 categoryToEdit.get().setName(category.getName());
             }
-            categoryRepository.save(category);
+            categoryRepository.save(categoryToEdit.get());
             return ResponseEntity.ok("Category edited.");
         } else {
             return ResponseEntity.notFound().build();

@@ -12,19 +12,45 @@ public class Rating {
 
     private float rating;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_article",referencedColumnName = "id")
     private Article article;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_customer",referencedColumnName = "id")
     private Customer customer;
 
-    public Long getId_rating() {
+    public Rating(float rating, Article article, Customer customer) {
+        this.rating = rating;
+        this.article = article;
+        this.customer = customer;
+    }
+
+    public Rating() {
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId_rating(Long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public float getRating() {

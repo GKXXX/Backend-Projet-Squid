@@ -81,11 +81,11 @@ public class Customer {
         return mail;
     }
 
-    public Long getId_customer() {
+    public Long getId() {
         return id;
     }
 
-    public void setId_customer(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
