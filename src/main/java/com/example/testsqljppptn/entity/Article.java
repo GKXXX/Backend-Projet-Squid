@@ -9,7 +9,7 @@ import java.util.Set;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id_article;
+    private int id;
 
     private String name;
 
@@ -20,7 +20,7 @@ public class Article {
     private String color;
 
     private Long price;
-    @OneToMany(mappedBy = "id_image",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "article",cascade = CascadeType.PERSIST)
     private Set<Image> images;
     @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
     private Set<Order> orders;
@@ -29,7 +29,7 @@ public class Article {
     @OneToMany(mappedBy = "rating",cascade = CascadeType.MERGE)
     private Set<Rating> ratings;
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_category",referencedColumnName = "id_category")
+    @JoinColumn(name = "category",referencedColumnName = "id")
     private Category category;
 
 
@@ -37,7 +37,7 @@ public class Article {
     }
 
     public Article(int id_article, String name, String description, int stock, String color, Long price, Set<Image> images) {
-        this.id_article = id_article;
+        this.id = id_article;
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -47,7 +47,7 @@ public class Article {
     }
 
     public Article(int id_article, String name, String description, int stock, String color, Long price, Set<Image> images, Set<Rating> ratings) {
-        this.id_article = id_article;
+        this.id = id_article;
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -81,11 +81,11 @@ public class Article {
 
 
     public int getId() {
-        return id_article;
+        return id;
     }
 
     public void setId(int id_article) {
-        this.id_article = id_article;
+        this.id = id_article;
     }
 
     public String getName() {

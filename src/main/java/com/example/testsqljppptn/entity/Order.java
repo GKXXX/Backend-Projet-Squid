@@ -8,7 +8,7 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_order;
+    private Long id;
 
     private Number totalAmmount;
 
@@ -16,17 +16,17 @@ public class Order {
 
     private String paiementMethod;
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-    @JoinTable(name="order_to_article",joinColumns = {@JoinColumn(name="id")}, inverseJoinColumns = {@JoinColumn(name="id_article")})
+    @JoinTable(name="order_to_article",joinColumns = {@JoinColumn(name="id_order")}, inverseJoinColumns = {@JoinColumn(name="id_article")})
     private Set<Article> articles;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id")
+    @JoinColumn(name="customer")
     private Customer customer;
 
     public Long getId_order() {
-        return id_order;
+        return id;
     }
 
     public void setId_order(Long id) {
-        this.id_order = id;
+        this.id = id;
     }
 }

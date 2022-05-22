@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_contact;
+    private Long id;
 
     private String subject;
 
@@ -15,7 +15,7 @@ public class Contact {
     private String message;
 
     @ManyToOne
-    @JoinColumn(name = "idcustomer")
+    @JoinColumn(name = "id_customer")
     private Customer customer;
 
     public String getMessage() {
@@ -27,10 +27,10 @@ public class Contact {
     }
 
     public Long getId_contact() {
-        return id_contact;
+        return id;
     }
 
     public void setId_contact(Long id) {
-        this.id_contact = id;
+        this.id = id;
     }
 }

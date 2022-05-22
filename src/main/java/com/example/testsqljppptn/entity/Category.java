@@ -8,7 +8,7 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_category;
+    private Long id;
 
     private String name;
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -16,11 +16,11 @@ public class Category {
 
 
     public Long getId_category() {
-        return id_category;
+        return id;
     }
 
     public void setId_category(Long id) {
-        this.id_category = id;
+        this.id = id;
     }
 
     public String getName() {

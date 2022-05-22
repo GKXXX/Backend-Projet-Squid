@@ -65,13 +65,13 @@ public class CustomerController   {
     }
 
     @PutMapping()
-    public ResponseEntity<Optional<Customer>> editCustomer(@RequestBody Customer customer) {
-        Optional<Customer> customerToEdit = customerRepository.findByMail(customer.getMail());
+    public ResponseEntity<Optional<Customer>> editCustomer(@RequestParam int id,@RequestBody Customer customer) {
+        Optional<Customer> customerToEdit = customerRepository.findById(id);
         if (customerToEdit.isPresent()) {
             if (customer.getMail() != null) {
                 customerToEdit.get().setMail(customer.getMail());
             }
-            if (!customer.getPassword().equals(customerToEdit.get().getPassword())) {
+            if (customer.getPassword() != null ) {
                 String hashedPassword = "";
                 try {
                     MessageDigest digest = MessageDigest.getInstance("SHA-512");

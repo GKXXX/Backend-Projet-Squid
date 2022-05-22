@@ -8,7 +8,7 @@ import java.util.Set;
 public class Customer {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id_customer;
+    private Long id;
 
     private String mail;
 
@@ -30,16 +30,16 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name="id_role")
     private Role role;
-    @OneToMany(mappedBy = "id_contact")
+    @OneToMany(mappedBy = "id")
     private Set<Contact> contacts;
-    @OneToMany(mappedBy = "id_paiement_method")
+    @OneToMany(mappedBy = "id")
     private Set<PaiementMethod> paiementMethod;
-    @OneToMany(mappedBy = "id_order")
+    @OneToMany(mappedBy = "id")
     private Set<Order> orders;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "favorites",joinColumns = {@JoinColumn(name = "id_customer")}, inverseJoinColumns = {@JoinColumn(name = "id_article")})
     private Set<Article> favorites;
-    @OneToMany( mappedBy = "id_rating")
+    @OneToMany( mappedBy = "id")
     private Set<Rating> ratings;
 
     public Customer(String mail, String password) {
@@ -82,11 +82,11 @@ public class Customer {
     }
 
     public Long getId_customer() {
-        return id_customer;
+        return id;
     }
 
     public void setId_customer(Long id) {
-        this.id_customer = id;
+        this.id = id;
     }
 
     public void setPassword(String password) {

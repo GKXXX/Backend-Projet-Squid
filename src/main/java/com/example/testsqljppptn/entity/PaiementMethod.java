@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class PaiementMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_paiement_method;
+    private Long id;
 
     private String type;
 
@@ -21,15 +21,15 @@ public class PaiementMethod {
 
     private String firstName;
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="id_customer",referencedColumnName = "id_customer")
+    @JoinColumn(name="id_customer",referencedColumnName = "id")
     private Customer customer;
 
     public Long getId_paiement_method() {
-        return id_paiement_method;
+        return id;
     }
 
     public void setId_paiement_method(Long id) {
-        this.id_paiement_method = id;
+        this.id = id;
     }
 
     public String getType() {

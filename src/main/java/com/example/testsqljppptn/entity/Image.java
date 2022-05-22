@@ -9,19 +9,19 @@ import javax.persistence.*;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_image;
+    private Long id;
 
     private String url;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_article")
+    @JoinColumn(name="article")
     private Article article;
 
     public Image() {
     }
 
     public Image(Long id_image, String url, Article article) {
-        this.id_image = id_image;
+        this.id = id_image;
         this.url = url;
         this.article = article;
     }
@@ -35,11 +35,11 @@ public class Image {
     }
 
     public Long getId_image() {
-        return id_image;
+        return id;
     }
 
     public void setId_image(Long id) {
-        this.id_image = id;
+        this.id = id;
     }
 
     public String getUrl() {

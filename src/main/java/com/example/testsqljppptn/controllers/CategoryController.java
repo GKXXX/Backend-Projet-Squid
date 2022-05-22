@@ -22,8 +22,8 @@ public class CategoryController {
     }
 
     @GetMapping("/byId")
-    public Optional<Category> getById(@RequestParam Long idCategory) {
-        return categoryRepository.findById(idCategory);
+    public Optional<Category> getById(@RequestParam Long id) {
+        return categoryRepository.findById(id);
     }
 
     @PostMapping()
@@ -33,8 +33,8 @@ public class CategoryController {
     }
 
     @PutMapping()
-    public ResponseEntity editCategory(@RequestBody Category category) {
-        Optional<Category> categoryToEdit =  categoryRepository.findById(category.getId_category());
+    public ResponseEntity editCategory(@RequestParam Long id ,@RequestBody Category category) {
+        Optional<Category> categoryToEdit =  categoryRepository.findById(id);
         if (categoryToEdit.isPresent()) {
             if (!categoryToEdit.get().getName().equals(category.getName())) {
                 categoryToEdit.get().setName(category.getName());

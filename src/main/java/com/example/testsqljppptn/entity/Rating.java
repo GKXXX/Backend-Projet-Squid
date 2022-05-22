@@ -8,23 +8,23 @@ import java.util.Set;
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_rating;
+    private Long id;
 
     private float rating;
 
     @ManyToOne
-    @JoinColumn(name = "id_article",referencedColumnName = "id_article")
+    @JoinColumn(name = "id_article",referencedColumnName = "id")
     private Article article;
     @ManyToOne
-    @JoinColumn(name = "id_customer",referencedColumnName = "id_customer")
+    @JoinColumn(name = "id_customer",referencedColumnName = "id")
     private Customer customer;
 
     public Long getId_rating() {
-        return id_rating;
+        return id;
     }
 
     public void setId_rating(Long id) {
-        this.id_rating = id;
+        this.id = id;
     }
 
     public float getRating() {
