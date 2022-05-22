@@ -35,6 +35,7 @@ public class AutenticationController {
     public ResponseEntity connectMobile(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("json");
         System.out.println(email);
+        /**
         Optional<Customer> loggingCustomer = customerRepository.findByMail(email);
         if (!loggingCustomer.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -62,6 +63,8 @@ public class AutenticationController {
         } else {
             return ResponseEntity.internalServerError().body("Mot de passe incorrect");
         }
+         */
+        return ResponseEntity.ok().build();
 
     }
 
