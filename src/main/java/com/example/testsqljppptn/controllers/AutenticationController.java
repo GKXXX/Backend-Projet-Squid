@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -30,7 +32,10 @@ public class AutenticationController {
 
 
     @PostMapping(value = "/connection_mobile",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity connectMobile(@RequestBody String email,@RequestBody String password) {
+    public ResponseEntity connectMobile(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        System.out.println(email); 
         Optional<Customer> loggingCustomer = customerRepository.findByMail(email);
         if (!loggingCustomer.isPresent()) {
             return ResponseEntity.notFound().build();
