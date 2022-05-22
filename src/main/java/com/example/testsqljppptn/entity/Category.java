@@ -11,7 +11,7 @@ public class Category {
     private Long id;
 
     private String name;
-    @OneToMany(mappedBy = "category",cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category",cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private Set<Article> articles;
 
 
