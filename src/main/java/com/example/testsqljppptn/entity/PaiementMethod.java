@@ -27,11 +27,11 @@ public class PaiementMethod {
     @JoinColumn(name="id_customer",referencedColumnName = "id")
     private Customer customer;
 
-    public Long getId_paiement_method() {
+    public Long getId() {
         return id;
     }
 
-    public void setId_paiement_method(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -18,11 +18,11 @@ public class Category {
     private Set<Article> articles;
 
 
-    public Long getId_category() {
+    public Long getId() {
         return id;
     }
 
-    public void setId_category(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
