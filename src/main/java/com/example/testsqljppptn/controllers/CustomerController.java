@@ -51,6 +51,7 @@ public class CustomerController   {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
         }
+        customer.setPassword(hashedPassword);
         customerRepository.save(customer);
         return ResponseEntity.ok().build();
     }
