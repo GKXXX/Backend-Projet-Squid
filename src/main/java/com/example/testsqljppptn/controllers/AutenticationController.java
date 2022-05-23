@@ -92,7 +92,7 @@ public class AutenticationController {
         }
         registeringCustomerInfo.setPassword(hashedPassword);
         customerRepository.save(registeringCustomerInfo);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("OK");
     }
 
     private boolean IsUserAlreadyExist(Iterable<Customer> listCustomer,String mail) {
