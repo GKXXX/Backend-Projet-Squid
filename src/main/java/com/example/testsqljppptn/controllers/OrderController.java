@@ -21,6 +21,13 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
+    /**
+    @GetMapping("/myOrders")
+    public Iterable<Order> getMyOrders(@RequestParam Long idCustomer) {
+
+        return
+    }*/
+
     @GetMapping("/byId")
     public ResponseEntity<Optional<Order>> getOrder(@RequestParam Long id) {
         Optional<Order> order = orderRepository.findById(id);
@@ -29,6 +36,12 @@ public class OrderController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping()
+    public ResponseEntity createOrder(@RequestBody Order order) {
+        orderRepository.save(order);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping()

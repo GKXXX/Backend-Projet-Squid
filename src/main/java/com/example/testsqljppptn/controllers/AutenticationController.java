@@ -20,6 +20,8 @@ import javax.websocket.server.PathParam;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -29,44 +31,6 @@ public class AutenticationController {
 
     @Autowired
     private CustomerRepository customerRepository;
-
-
-    @PostMapping(value = "/connection_mobile",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity connectMobile(HttpServletRequest request, HttpServletResponse response) {
-        String email = request.getParameter("json");
-        System.out.println(email);
-        /**
-        Optional<Customer> loggingCustomer = customerRepository.findByMail(email);
-        if (!loggingCustomer.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        String hashedPassword = "";
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-512");
-            digest.reset();
-            digest.update(password.getBytes(StandardCharsets.UTF_8));
-            hashedPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
-        }
-        if (loggingCustomer.get().getPassword().equals(hashedPassword)) {
-            String token = "";
-            try {
-                Algorithm algorithm = Algorithm.HMAC512("Cadrillage-78");
-                token = JWT.create().withIssuer("auth0").sign(algorithm);
-            } catch (JWTCreationException exception) {
-                throw exception;
-            }
-
-            return ResponseEntity.ok().body( token );
-        } else {
-            return ResponseEntity.internalServerError().body("Mot de passe incorrect");
-        }
-         */
-        return ResponseEntity.ok().build();
-
-    }
 
     @PostMapping(value = "/connection",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity connect(@RequestBody Customer connectingCustomerInfo) {
@@ -89,8 +53,16 @@ public class AutenticationController {
         if (loggingCustomer.get().getPassword().equals(hashedPassword)) {
             String token = "";
             try {
+                Map<String,Object> payload = new HashMap<>();
+                payload.put("email",loggingCustomer.get().getMail());
+                payload.put("firstName",loggingCustomer.get().getFirstName());
+                payload.put("lastName",loggingCustomer.get().getName());
+                payload.put("id",loggingCustomer.get().getId());
+                payload.put("isAdmin",loggingCustomer.get().isAdmin());
+
                 Algorithm algorithm = Algorithm.HMAC512("Cadrillage-78");
-                token = JWT.create().withIssuer("auth0").sign(algorithm);
+                token = JWT.create().withPayload(payload).withIssuer("auth0").sign(algorithm);
+
             } catch (JWTCreationException exception) {
                 throw exception;
             }

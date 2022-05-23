@@ -1,7 +1,9 @@
 package com.example.testsqljppptn.repositories;
 
 import com.example.testsqljppptn.entity.Order;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -42,4 +44,7 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
 
     @Override
     void deleteAll();
+
+    @Query(value = "SELECT * FROM orders WHERE customer=:idCustomer",nativeQuery = true)
+    Iterable<Order> getMyOrder(@Param("idCustomer") Long idCustomer);
 }
