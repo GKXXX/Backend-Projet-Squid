@@ -12,6 +12,7 @@ public class Customer {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String mail;
 
     private String password;
