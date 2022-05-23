@@ -26,7 +26,7 @@ public class CustomerController   {
     }
 
     @GetMapping("/byId")
-    public ResponseEntity<Optional<Customer>> getCustomerById(@RequestParam int id) {
+    public ResponseEntity<Optional<Customer>> getCustomerById(@RequestParam Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()) {
             return ResponseEntity.ok(customer);
@@ -65,7 +65,7 @@ public class CustomerController   {
     }
 
     @PutMapping()
-    public ResponseEntity<Optional<Customer>> editCustomer(@RequestParam int id,@RequestBody Customer customer) {
+    public ResponseEntity<Optional<Customer>> editCustomer(@RequestParam Long id,@RequestBody Customer customer) {
         Optional<Customer> customerToEdit = customerRepository.findById(id);
         if (customerToEdit.isPresent()) {
             if (customer.getMail() != null) {
@@ -110,7 +110,7 @@ public class CustomerController   {
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteCustomer(@RequestParam int id) {
+    public ResponseEntity deleteCustomer(@RequestParam Long id) {
         customerRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

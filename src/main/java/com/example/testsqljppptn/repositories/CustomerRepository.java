@@ -8,25 +8,25 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface CustomerRepository extends CrudRepository<Customer,Integer> {
+public interface CustomerRepository extends CrudRepository<Customer,Long> {
 
     @Override
     <S extends Customer> S save(S entity);
 
     @Override
-    Optional<Customer> findById(Integer integer);
+    Optional<Customer> findById(Long integer);
 
     @Override
     Iterable<Customer> findAll();
 
     @Override
-    void deleteById(Integer integer);
+    void deleteById(Long integer);
 
     @Override
     void delete(Customer entity);
 
     @Override
-    void deleteAllById(Iterable<? extends Integer> integers);
+    void deleteAllById(Iterable<? extends Long> integers);
 
     @Query(value = "SELECT * FROM customers c WHERE c.mail = :mail", nativeQuery = true)
     Optional<Customer> findByMail(@Param("mail") String mail);
