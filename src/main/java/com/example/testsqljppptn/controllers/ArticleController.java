@@ -57,9 +57,7 @@ public class ArticleController {
     }
 
     @GetMapping("/getByCategory")
-    public @ResponseBody Iterable<Article> getByCategory(@RequestParam Long idCategory) {
-        System.out.println(idCategory);
-        int id = idCategory.intValue();
+    public @ResponseBody Iterable<Article> getByCategory(@RequestParam Long id) {
         return articleRepository.findByCategory(id);
     }
 
