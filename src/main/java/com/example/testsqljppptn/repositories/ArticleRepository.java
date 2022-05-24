@@ -30,7 +30,7 @@ public interface ArticleRepository extends CrudRepository<Article,Integer> {
 
     //@Query("SELECT articles.id_article, articles.color,articles.description,articles.name,articles.price FROM articles JOIN ")
 
-    @Query(value = "select DISTINCT articles.id,articles.color,articles.description,articles.name,articles.price,articles.stock FROM articles INNER JOIN article_to_category ON articles.id_article = article_to_category.id_article WHERE article_to_category.id_category = :idCategory", nativeQuery = true)
+    @Query(value = "select * FROM articles  WHERE category = :idCategory", nativeQuery = true)
     Iterable<Article> findByCategory(@Param("idCategory") Long idCategory);
 
     @Query(value = "SELECT id_article,avg(rating) as averageRating FROM ratings GROUP BY id_article ORDER BY averageRating DESC ",nativeQuery = true)
