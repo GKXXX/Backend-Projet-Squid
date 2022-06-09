@@ -1,6 +1,7 @@
 package com.example.testsqljppptn.controllers;
 
 import com.example.testsqljppptn.entity.*;
+import com.example.testsqljppptn.repositories.CategoryRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @PostMapping()
     public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article) {
@@ -97,7 +101,8 @@ public class ArticleController {
                 articleToEdit.get().setImages(article.getImages());
             }
             if(article.getCategory() != null ) {
-                articleToEdit.get().setCategory(article.getCategory());
+                Optional<Category> category = categoryRepository.findById(article.getCategory().getId());
+                category.ifPresent(value -> articleToEdit.get().setCategory(value));
             }
             articleRepository.save(articleToEdit.get());
             return ResponseEntity.ok("Article edited.");
