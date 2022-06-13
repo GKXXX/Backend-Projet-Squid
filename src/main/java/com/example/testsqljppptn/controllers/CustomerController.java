@@ -100,6 +100,13 @@ public class CustomerController   {
             if (customer.getCity() != null) {
                 customerToEdit.get().setCity(customer.getCity());
             }
+            if (customer.getPostalCode() != 0) {
+                customerToEdit.get().setPostalCode(customer.getPostalCode());
+            }
+
+            if(customer.getCivilite() != null) {
+                customerToEdit.get().setCivilite(customer.getCivilite());
+            }
             if (customer.isAdmin() != customerToEdit.get().isAdmin()) {
                 customerToEdit.get().setAdmin(customer.isAdmin());
             }

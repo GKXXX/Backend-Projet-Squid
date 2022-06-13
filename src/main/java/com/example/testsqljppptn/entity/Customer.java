@@ -29,12 +29,12 @@ public class Customer {
 
     private boolean isAdmin;
 
+    private String civilite;
+
     private String addressComment;
     @JsonIgnore
     @OneToMany(mappedBy = "id")
     private Set<Contact> contacts;
-    @OneToMany(mappedBy = "id")
-    private Set<PaiementMethod> paiementMethod;
     @OneToMany(mappedBy = "id")
     private Set<Order> orders;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
@@ -103,6 +103,14 @@ public class Customer {
         return ratings;
     }
 
+    public String getCivilite() {
+        return civilite;
+    }
+
+    public void setCivilite(String civilite) {
+        this.civilite = civilite;
+    }
+
     public Long getId() {
         return id;
     }
@@ -155,9 +163,6 @@ public class Customer {
         this.contacts = contacts;
     }
 
-    public void setPaiementMethod(Set<PaiementMethod> paiementMethod) {
-        this.paiementMethod = paiementMethod;
-    }
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
