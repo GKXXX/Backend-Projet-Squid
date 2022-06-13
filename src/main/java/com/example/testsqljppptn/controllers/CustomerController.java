@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.management.OperatingSystemMXBean;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -104,8 +103,8 @@ public class CustomerController   {
                 customerToEdit.get().setPostalCode(customer.getPostalCode());
             }
 
-            if(customer.getCivilite() != null) {
-                customerToEdit.get().setCivilite(customer.getCivilite());
+            if(customer.getCivility() != null) {
+                customerToEdit.get().setCivility(customer.getCivility());
             }
             if (customer.isAdmin() != customerToEdit.get().isAdmin()) {
                 customerToEdit.get().setAdmin(customer.isAdmin());

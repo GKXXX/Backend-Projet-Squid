@@ -29,7 +29,7 @@ public class Customer {
 
     private boolean isAdmin;
 
-    private String civilite;
+    private String civility;
 
     private String addressComment;
     @JsonIgnore
@@ -103,12 +103,12 @@ public class Customer {
         return ratings;
     }
 
-    public String getCivilite() {
-        return civilite;
+    public String getCivility() {
+        return civility;
     }
 
-    public void setCivilite(String civilite) {
-        this.civilite = civilite;
+    public void setCivility(String civilite) {
+        this.civility = civilite;
     }
 
     public Long getId() {
