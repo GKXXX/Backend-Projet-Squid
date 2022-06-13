@@ -83,6 +83,26 @@ public class Customer {
         return mail;
     }
 
+    public int getPostalCode() {
+        return postalCode;
+    }
+
+    public Set<Contact> getContacts() {
+        return contacts;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public Set<Article> getFavorites() {
+        return favorites;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
     public Long getId() {
         return id;
     }
