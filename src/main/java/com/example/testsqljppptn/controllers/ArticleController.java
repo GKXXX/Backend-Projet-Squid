@@ -26,6 +26,14 @@ public class ArticleController {
 
     @PostMapping()
     public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article) {
+        System.out.println(article.getImages().getClass());
+        HashSet<Image> listImageArticle = new HashSet<Image>();
+        for (Image image :article.getImages()) {
+            image.setArticle(article);
+            listImageArticle.add(image);
+        }
+
+        article.setImages(listImageArticle);
         articleRepository.save(article);
         return ResponseEntity.ok().body("article created.");
     }
