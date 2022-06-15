@@ -1,32 +1,51 @@
 package com.example.testsqljppptn.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
+@Entity
+@Table(name = "carts")
 public class Cart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
 
-    private Long id;
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "article",referencedColumnName = "id")
+    private Article articles;
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer",referencedColumnName = "id")
+    private Customer customer;
 
-    private Set<Article> articles;
-
-    public Cart(Long id, Set<Article> articles) {
+    public Cart(int id, Article articles) {
         this.id = id;
         this.articles = articles;
     }
 
-    public Long getId() {
+    public Cart() {
+
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Set<Article> getArticles() {
+    public Article getArticles() {
         return articles;
     }
 
-    public void setArticles(Set<Article> articles) {
+    public void setArticles(Article articles) {
         this.articles = articles;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

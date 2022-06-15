@@ -76,6 +76,11 @@ public class ArticleController {
         }
     }
 
+    @GetMapping("/names")
+    public @ResponseBody Object[][] getNames() {
+        return articleRepository.findListNameArticle();
+    }
+
     @PutMapping()
     public @ResponseBody ResponseEntity editArticle(@RequestParam int id,@RequestBody Article article) {
         Optional<Article > articleToEdit = articleRepository.findById(id);

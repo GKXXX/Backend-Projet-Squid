@@ -33,6 +33,9 @@ public interface ArticleRepository extends CrudRepository<Article,Integer> {
     @Query(value = "select * FROM articles  WHERE category = :idCategory", nativeQuery = true)
     Iterable<Article> findByCategory(@Param("idCategory") Long idCategory);
 
-    @Query(value = "SELECT id_article,avg(rating) as averageRating FROM ratings GROUP BY id_article ORDER BY averageRating DESC ",nativeQuery = true)
+    @Query(value = "SELECT id,avg(rating) as averageRating FROM ratings GROUP BY id_article ORDER BY averageRating DESC ",nativeQuery = true)
     Object[][] findAverageRatings();
+
+    @Query(value = "SELECT id,name from articles",nativeQuery = true)
+    Object[][] findListNameArticle();
 }

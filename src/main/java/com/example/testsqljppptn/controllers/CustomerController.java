@@ -71,7 +71,7 @@ public class CustomerController   {
             if (customer.getMail() != null) {
                 customerToEdit.get().setMail(customer.getMail());
             }
-            if (customer.getPassword() != null ) {
+            if (customer.getPassword() != null && !customer.getPassword().equals("")) {
                 String hashedPassword = "";
                 try {
                     MessageDigest digest = MessageDigest.getInstance("SHA-512");
