@@ -1,5 +1,7 @@
 package com.example.testsqljppptn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Cart {
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "article",referencedColumnName = "id")
     private Article articles;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "customer",referencedColumnName = "id")
     private Customer customer;

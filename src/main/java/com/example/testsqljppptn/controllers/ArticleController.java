@@ -41,7 +41,7 @@ public class ArticleController {
     }
 
     @GetMapping("/listName")
-    public @ResponseBody Object[][] getListName(){
+    public @ResponseBody Iterable<Article> getListName(){
         return articleRepository.findListNameArticle();
     }
 

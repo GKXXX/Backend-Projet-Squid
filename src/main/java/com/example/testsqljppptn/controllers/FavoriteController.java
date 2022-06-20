@@ -14,7 +14,6 @@ public class FavoriteController {
     private FavoriteRepository favoriteRepository;
 
     @PostMapping()
-    @ResponseStatus(value = HttpStatus.OK)
     public void postFavorite(@RequestParam("idCustomer") int idCustomer,@RequestParam("idArticle") int idArticle) {
         favoriteRepository.saveFavorite(idCustomer,idArticle);
     }
