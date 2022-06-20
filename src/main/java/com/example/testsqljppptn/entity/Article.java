@@ -3,6 +3,7 @@ package com.example.testsqljppptn.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,8 @@ public class Article {
     private String color;
 
     private Float price;
-    @OneToMany(mappedBy = "article",cascade = CascadeType.PERSIST)
-    private Set<Image> images;
+    @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)
+    private List<Image> images;
     @JsonIgnore
     @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
     private Set<Order> orders;
@@ -39,7 +40,7 @@ public class Article {
     public Article() {
     }
 
-    public Article(int id_article, String name, String description, int stock, String color, Float price, Set<Image> images) {
+    public Article(int id_article, String name, String description, int stock, String color, Float price, List<Image> images) {
         this.id = id_article;
         this.name = name;
         this.description = description;
@@ -49,7 +50,7 @@ public class Article {
         this.images = images;
     }
 
-    public Article(int id_article, String name, String description, int stock, String color, Float price, Set<Image> images, Set<Rating> ratings) {
+    public Article(int id_article, String name, String description, int stock, String color, Float price, List<Image> images, Set<Rating> ratings) {
         this.id = id_article;
         this.name = name;
         this.description = description;
@@ -68,7 +69,7 @@ public class Article {
         this.price = price;
     }
 
-    public Article(String name, String description, int stock, String color, Float price, Set<Image> images) {
+    public Article(String name, String description, int stock, String color, Float price, List<Image> images) {
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -131,11 +132,11 @@ public class Article {
         this.price = price;
     }
 
-    public Set<Image> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(Set<Image> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 
