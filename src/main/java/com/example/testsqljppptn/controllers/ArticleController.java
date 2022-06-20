@@ -26,16 +26,23 @@ public class ArticleController {
 
     @PostMapping()
     public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article) {
-        System.out.println(article.getImages().getClass());
-        HashSet<Image> listImageArticle = new HashSet<Image>();
-        for (Image image :article.getImages()) {
-            image.setArticle(article);
-            listImageArticle.add(image);
+        ArrayList<Image> listImageArticle = new ArrayList<>();
+        if (article.getImages() != null) {
+            for (Image image : article.getImages()) {
+                image.setArticle(article);
+                listImageArticle.add(image);
+            }
+            article.setImages(listImageArticle);
         }
 
-        article.setImages(listImageArticle);
+
         articleRepository.save(article);
         return ResponseEntity.ok().body("article created.");
+    }
+
+    @GetMapping("/listName")
+    public @ResponseBody Object[][] getListName(){
+        return articleRepository.findListNameArticle();
     }
 
     @GetMapping("/trending")
@@ -43,19 +50,19 @@ public class ArticleController {
         Object[][] listAverageRatings = articleRepository.findAverageRatings();
         ArrayList<Article> listArticleToSend = new ArrayList<Article>();
         System.out.println(listAverageRatings.length);
-        if (listAverageRatings.length >= 8) {
-            for (int i = 0; i < 8; i++) {
+        if (listAverageRatings.length >= 9) {
+            for (int i = 1; i < 9; i++) {
                 listArticleToSend.add(articleRepository.findById((Integer) listAverageRatings[i][0]).get());
             }
         } else {
             int sizeProduct = listAverageRatings.length;
-            for (int i = 0; i<listAverageRatings.length;i++) {
+            for (int i = 1; i<listAverageRatings.length;i++) {
                 listArticleToSend.add(articleRepository.findById((Integer) listAverageRatings[i][0]).get());
             }
-            int j = 8 - listArticleToSend.size();
+            int j = 9 - listArticleToSend.size();
             ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
-            int range = listArticle.size() +1;
-            for (int o = 0;o < j;o++) {
+            int range = listArticle.size();
+            for (int o = 1;o < j;o++) {
                 listArticleToSend.add(listArticle.get((int) (Math.random() * range)));
             }
         }

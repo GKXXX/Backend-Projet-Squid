@@ -2,9 +2,11 @@ package com.example.testsqljppptn.repositories;
 
 import com.example.testsqljppptn.entity.Rating;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface RatingRepository extends CrudRepository<Rating,Long> {
 
     @Override

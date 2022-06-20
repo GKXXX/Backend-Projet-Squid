@@ -4,10 +4,12 @@ import com.example.testsqljppptn.entity.Article;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Optional;
 
+@Repository
 public interface ArticleRepository extends CrudRepository<Article,Integer> {
 
     @Override
@@ -33,7 +35,7 @@ public interface ArticleRepository extends CrudRepository<Article,Integer> {
     @Query(value = "select * FROM articles  WHERE category = :idCategory", nativeQuery = true)
     Iterable<Article> findByCategory(@Param("idCategory") Long idCategory);
 
-    @Query(value = "SELECT id,avg(rating) as averageRating FROM ratings GROUP BY id_article ORDER BY averageRating DESC ",nativeQuery = true)
+    @Query(value = "SELECT id,avg(rating) as averageRating FROM ratings GROUP BY id,id_article ORDER BY averageRating DESC",nativeQuery = true)
     Object[][] findAverageRatings();
 
     @Query(value = "SELECT id,name from articles",nativeQuery = true)
