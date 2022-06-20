@@ -17,5 +17,6 @@ public interface FavoriteRepository extends CrudRepository<Customer,Integer> {
     @Query(value = "INSERT INTO favorites VALUES (:idCustomer,:idArticle)",nativeQuery = true)
     void saveFavorite(@Param("idCustomer") int idCustomer,@Param("idArticle") int idArticle);
 
-    
+    @Query(value = "SELECT * FROM favorites WHERE",nativeQuery = true)
+    Object[] getFavoritesById(@Param("idCustomer") int idCustomer);
 }

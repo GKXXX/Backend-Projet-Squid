@@ -17,4 +17,9 @@ public class FavoriteController {
     public void postFavorite(@RequestParam("idCustomer") int idCustomer,@RequestParam("idArticle") int idArticle) {
         favoriteRepository.saveFavorite(idCustomer,idArticle);
     }
+
+    @GetMapping()
+    public void getFavoritesByCustomer(@RequestParam("idCustomer") int idCustomer) {
+
+    }
 }

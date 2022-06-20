@@ -20,11 +20,6 @@ public class CartController {
         return cartRepository.getCartByCustomer(idCustomer);
     }
 
-    @PostMapping()
-    public void addToCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
-        cartRepository.addToCart(idArticle,idCustomer,1);
-    }
-
     @PostMapping("/withQuantity")
     public void addToCartWithQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quantity) {
         cartRepository.addToCart(idArticle,idCustomer,quantity);

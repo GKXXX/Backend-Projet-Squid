@@ -2,6 +2,7 @@ package com.example.testsqljppptn.controllers;
 
 import com.example.testsqljppptn.entity.*;
 import com.example.testsqljppptn.repositories.CategoryRepository;
+import com.example.testsqljppptn.repositories.ImageRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class ArticleController {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     @PostMapping()
     public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article) {
@@ -110,8 +114,13 @@ public class ArticleController {
             if (article.getStock() != 0) {
                 articleToEdit.get().setStock(article.getStock());
             }
-            if (article.getImages() != null){
-                articleToEdit.get().setImages(article.getImages());
+            if (article.getImages().size() != 0){
+                System.out.println(article.getImages());
+                imageRepository.deleteImagesByArticle(articleToEdit.get().getId());
+                for (Image image:article.getImages()) {
+                    imageRepository.customSave(image.getUrl(),articleToEdit.get().getId());
+                }
+
             }
             if(article.getCategory() != null ) {
                 Optional<Category> category = categoryRepository.findById(article.getCategory().getId());
