@@ -40,6 +40,11 @@ public class Article {
     public Article() {
     }
 
+    public Article(int id, String label) {
+        this.id = id;
+        this.name = label;
+    }
+
     public Article(int id_article, String name, String description, int stock, String color, Float price, List<Image> images) {
         this.id = id_article;
         this.name = name;

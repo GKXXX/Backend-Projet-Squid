@@ -6,8 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
-import java.util.HashMap;
 import java.util.Optional;
 
 @Repository
@@ -39,7 +37,7 @@ public interface ArticleRepository extends CrudRepository<Article,Integer> {
     @Query(value = "SELECT id,avg(rating) as averageRating FROM ratings GROUP BY id,id_article ORDER BY averageRating DESC",nativeQuery = true)
     Object[][] findAverageRatings();
 
-    @Transactional
+    /**@Transactional
     @Query(value = "SELECT id,name as label from articles",nativeQuery = true)
-    Iterable<Article> findListNameArticle();
+    List<ArticleInfos> findListNameArticle();*/
 }

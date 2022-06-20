@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.testsqljppptn.repositories.ArticleRepository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.websocket.server.PathParam;
 import java.util.*;
 
 
@@ -45,12 +43,23 @@ public class ArticleController {
     }
 
     @GetMapping("/listName")
-    public @ResponseBody Iterable<Article> getListName(){
-        return articleRepository.findListNameArticle();
+    public @ResponseBody ResponseEntity<String> getListName(){
+        String returnString = "[";
+        ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
+        for (Article article:listArticle) {
+            returnString = returnString + "{\"id\":" + article.getId() + ",\"label\":\"" + article.getName() + "\"},";
+        }
+        returnString = returnString + "]";
+        return ResponseEntity.ok().body(returnString);
     }
 
     @GetMapping("/trending")
-    public @ResponseBody Iterable<Article> getTrending(){
+    public @ResponseBody ResponseEntity getTrending(){
+        ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
+        if (listArticle.size() == 0) {
+            String[] emptyTab = new String[0];
+            return ResponseEntity.ok(emptyTab);
+        }
         Object[][] listAverageRatings = articleRepository.findAverageRatings();
         ArrayList<Article> listArticleToSend = new ArrayList<Article>();
         System.out.println(listAverageRatings.length);
@@ -64,13 +73,12 @@ public class ArticleController {
                 listArticleToSend.add(articleRepository.findById((Integer) listAverageRatings[i][0]).get());
             }
             int j = 9 - listArticleToSend.size();
-            ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
             int range = listArticle.size();
             for (int o = 1;o < j;o++) {
                 listArticleToSend.add(listArticle.get((int) (Math.random() * range)));
             }
         }
-        return listArticleToSend;
+        return ResponseEntity.ok().body(listArticleToSend);
     }
 
     @JsonIgnore

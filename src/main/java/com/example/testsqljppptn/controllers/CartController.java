@@ -34,4 +34,9 @@ public class CartController {
     public void deleteArticleInCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
         cartRepository.deleteArticleInPanier(idArticle,idCustomer);
     }
+
+    @DeleteMapping("/byCustomer")
+    public void deleteCartByCustomer() {
+
+    }
 }
