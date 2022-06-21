@@ -61,17 +61,21 @@ public class ArticleController {
 
     @GetMapping("/listName")
     public @ResponseBody ResponseEntity<String> getListName(){
+
         String returnString = "[";
         ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
-        for (int i = 0;i<= listArticle.size();i++) {
-            if (i==listArticle.size()) {
-                returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"}";
-            } else {
-                returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"},";
+        if (listArticle.size() > 0) {
+            for (int i = 0; i <= listArticle.size(); i++) {
+                if (i == listArticle.size()) {
+                    returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"}";
+                } else {
+                    returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"},";
+                }
             }
+            returnString = returnString + "]";
+            return ResponseEntity.ok().body(returnString);
         }
-        returnString = returnString + "]";
-        return ResponseEntity.ok().body(returnString);
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/trending")
