@@ -60,7 +60,7 @@ public class ArticleController {
     }
 
     @GetMapping("/listName")
-    public @ResponseBody ResponseEntity<String> getListName(){
+    public @ResponseBody ResponseEntity getListName(){
 
         String returnString = "[";
         ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
@@ -75,7 +75,8 @@ public class ArticleController {
             returnString = returnString + "]";
             return ResponseEntity.ok().body(returnString);
         }
-        return ResponseEntity.notFound().build();
+        String[] emptyTab = new String[0];
+        return ResponseEntity.ok(emptyTab);
     }
 
     @GetMapping("/trending")
