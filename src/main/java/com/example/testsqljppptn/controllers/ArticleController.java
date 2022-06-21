@@ -65,8 +65,8 @@ public class ArticleController {
         String returnString = "[";
         ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
         if (listArticle.size() > 0) {
-            for (int i = 0; i <= listArticle.size(); i++) {
-                if (i == listArticle.size()) {
+            for (int i = 0; i < listArticle.size(); i++) {
+                if (i == listArticle.size() - 1) {
                     returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"}";
                 } else {
                     returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"},";
