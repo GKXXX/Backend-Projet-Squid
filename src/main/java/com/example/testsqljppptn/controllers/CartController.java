@@ -3,6 +3,7 @@ package com.example.testsqljppptn.controllers;
 import com.example.testsqljppptn.entity.Cart;
 import com.example.testsqljppptn.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,22 +22,26 @@ public class CartController {
     }
 
     @PostMapping("/withQuantity")
-    public void addToCartWithQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quantity) {
+    public ResponseEntity addToCartWithQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quantity) {
         cartRepository.addToCart(idArticle,idCustomer,quantity);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping()
-    public void modifyQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quatity) {
+    public ResponseEntity modifyQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quatity) {
         cartRepository.updatePanier(idArticle,idCustomer,quatity);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping()
-    public void deleteArticleInCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
+    public ResponseEntity deleteArticleInCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
         cartRepository.deleteArticleInPanier(idArticle,idCustomer);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/byCustomer")
-    public void deleteCartByCustomer() {
-
+    public ResponseEntity deleteCartByCustomer(@RequestParam("idCustomer") int idCustomer) {
+        cartRepository.deleteCartByCustomer(idCustomer);
+        return ResponseEntity.ok().build();
     }
 }

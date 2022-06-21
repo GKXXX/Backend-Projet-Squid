@@ -21,11 +21,20 @@ public interface CartRepository extends CrudRepository<Cart,Integer> {
     @Query(value = "INSERT INTO carts(article,customer,quantity) VALUES (:idArticle,:idCustomer,:quantity)",nativeQuery = true)
     public void addToCart(@Param("idArticle") int idArticle,@Param("idCustomer") int idCustomer,@Param("quantity") int quantity);
 
+    @Transactional
+    @Modifying
     @Query(value = "UPDATE carts SET quantity = :quantity WHERE article = :idArticle AND customer = :idCustomer",nativeQuery = true)
     public void updatePanier(@Param("idArticle") int idArticle,@Param("idCustomer") int idCustomer,@Param("quantity") int quantity);
 
+    @Transactional
+    @Modifying
     @Query(value = "DELETE FROM carts WHERE article = :idArticle AND customer = :idCustomer",nativeQuery = true)
     public void deleteArticleInPanier(@Param("idArticle") int idArticle,@Param("idCustomer") int idCustomer);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM carts WHERE customer =:idCustomer",nativeQuery = true)
+    void deleteCartByCustomer(@Param("idCustomer") int idCustomer);
 
 
 }

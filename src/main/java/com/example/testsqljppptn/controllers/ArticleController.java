@@ -42,12 +42,33 @@ public class ArticleController {
         return ResponseEntity.ok().body("article created.");
     }
 
+    @PostMapping("/multiple")
+    public @ResponseBody ResponseEntity addNewArticles(@RequestBody HashSet<Article> articles) {
+        ArrayList<Image> listImageArticle = new ArrayList<>();
+        for (Article article1:articles) {
+            if (article1.getImages() != null) {
+                for (Image image : article1.getImages()) {
+                    image.setArticle(article1);
+                    listImageArticle.add(image);
+                }
+                article1.setImages(listImageArticle);
+            }
+            articleRepository.save(article1);
+        }
+
+        return ResponseEntity.ok().body("articles created.");
+    }
+
     @GetMapping("/listName")
     public @ResponseBody ResponseEntity<String> getListName(){
         String returnString = "[";
         ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
-        for (Article article:listArticle) {
-            returnString = returnString + "{\"id\":" + article.getId() + ",\"label\":\"" + article.getName() + "\"},";
+        for (int i = 0;i<= listArticle.size();i++) {
+            if (i==listArticle.size()) {
+                returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"}";
+            } else {
+                returnString = returnString + "{\"id\":" + listArticle.get(i).getId() + ",\"label\":\"" + listArticle.get(i).getName() + "\"},";
+            }
         }
         returnString = returnString + "]";
         return ResponseEntity.ok().body(returnString);

@@ -116,6 +116,37 @@ public class CustomerController   {
         }
     }
 
+    /**@PutMapping()
+    public ResponseEntity editPassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword,@RequestParam("idCustomer") Long idCustomer) {
+        String hashedPasswordOldPassword = "";
+        Optional<Customer> customerToEdit = customerRepository.findById(idCustomer);
+        if (customerToEdit.isPresent()) {
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-512");
+                digest.reset();
+                digest.update(oldPassword.getBytes(StandardCharsets.UTF_8));
+                hashedPasswordOldPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.internalServerError().build();
+            }
+            if (hashedPasswordOldPassword.equals(customerToEdit.get().getPassword())) {
+                String hashedNewPassword = "";
+                try {
+                    MessageDigest digest = MessageDigest.getInstance("SHA-512");
+                    digest.reset();
+                    digest.update(newPassword.getBytes(StandardCharsets.UTF_8));
+                    hashedNewPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ResponseEntity.internalServerError().build();
+                }
+                customerToEdit.get().setPassword(hashedNewPassword);
+                customerRepository.save(customerToEdit.get());
+            }
+        }
+    }*/
+
     @DeleteMapping()
     public ResponseEntity deleteCustomer(@RequestParam Long id) {
         customerRepository.deleteById(id);
