@@ -9,12 +9,16 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CartRepository extends CrudRepository<Cart,Integer> {
 
     @Query(value = "SELECT * FROM carts INNER JOIN articles ON carts.article = articles.id WHERE carts.customer = :idCustomer",nativeQuery = true)
     public List<Cart> getCartByCustomer(@Param("idCustomer") int idCustomer);
+
+    @Query(value = "SELECT * FROM carts WHERE customer = :idCustomer AND article = :idArticle",nativeQuery = true)
+    public Optional<Cart> getCartByCustomerAndArticle(@Param("idCustomer") int idCustomer, @Param("idArticle") int idArticle);
 
     @Transactional
     @Modifying

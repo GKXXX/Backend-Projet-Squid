@@ -116,7 +116,7 @@ public class CustomerController   {
         }
     }
 
-    /**@PutMapping()
+    @PutMapping("/editPassword")
     public ResponseEntity editPassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword,@RequestParam("idCustomer") Long idCustomer) {
         String hashedPasswordOldPassword = "";
         Optional<Customer> customerToEdit = customerRepository.findById(idCustomer);
@@ -143,9 +143,12 @@ public class CustomerController   {
                 }
                 customerToEdit.get().setPassword(hashedNewPassword);
                 customerRepository.save(customerToEdit.get());
+                return ResponseEntity.ok("Mot de passe modifié.");
             }
+            return ResponseEntity.ok("Ancien mot de passe incorrect.");
         }
-    }*/
+        return ResponseEntity.ok("Utilisateur introuvable.");
+    }
 
     @DeleteMapping()
     public ResponseEntity deleteCustomer(@RequestParam Long id) {

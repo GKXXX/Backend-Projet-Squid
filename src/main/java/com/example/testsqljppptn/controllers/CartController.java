@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,8 +24,15 @@ public class CartController {
 
     @PostMapping("/withQuantity")
     public ResponseEntity addToCartWithQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quantity) {
-        cartRepository.addToCart(idArticle,idCustomer,quantity);
-        return ResponseEntity.ok().build();
+        Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
+        if (cart.isEmpty()) {
+            cartRepository.addToCart(idArticle, idCustomer, quantity);
+            return ResponseEntity.ok().build();
+        } else {
+            cartRepository.deleteArticleInPanier(idArticle,idCustomer);
+            cartRepository.addToCart(idArticle,idCustomer,quantity);
+            return ResponseEntity.ok().build();
+        }
     }
 
     @PutMapping()
@@ -44,4 +52,6 @@ public class CartController {
         cartRepository.deleteCartByCustomer(idCustomer);
         return ResponseEntity.ok().build();
     }
+
+
 }
