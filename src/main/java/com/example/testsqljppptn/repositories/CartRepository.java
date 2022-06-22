@@ -40,5 +40,9 @@ public interface CartRepository extends CrudRepository<Cart,Integer> {
     @Query(value = "DELETE FROM carts WHERE customer =:idCustomer",nativeQuery = true)
     void deleteCartByCustomer(@Param("idCustomer") int idCustomer);
 
+    @Override
+    <S extends Cart> S save(S entity);
 
+    @Override
+    void delete(Cart entity);
 }

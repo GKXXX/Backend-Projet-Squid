@@ -14,15 +14,15 @@ public class Cart {
     private int quantity;
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "article",referencedColumnName = "id")
-    private Article articles;
+    private Article article;
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "customer",referencedColumnName = "id")
     private Customer customer;
 
-    public Cart(int id, Article articles) {
+    public Cart(int id, Article article) {
         this.id = id;
-        this.articles = articles;
+        this.article = article;
     }
 
     public Cart() {
@@ -45,12 +45,12 @@ public class Cart {
         this.id = id;
     }
 
-    public Article getArticles() {
-        return articles;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setArticles(Article articles) {
-        this.articles = articles;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public Customer getCustomer() {

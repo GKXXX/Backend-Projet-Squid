@@ -1,12 +1,16 @@
 package com.example.testsqljppptn.controllers;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.testsqljppptn.entity.Cart;
 import com.example.testsqljppptn.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -18,8 +22,15 @@ public class CartController {
     private CartRepository cartRepository;
 
     @GetMapping("/byCustomer")
-    public List<Cart> getByCustomer(@RequestParam("idCustomer") int idCustomer) {
-        return cartRepository.getCartByCustomer(idCustomer);
+    public ResponseEntity getByCustomer(@RequestParam("idCustomer") int idCustomer, @RequestHeader String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
+        return ResponseEntity.ok(cartRepository.getCartByCustomer(idCustomer));
     }
 
     @PostMapping("/withQuantity")
@@ -33,6 +44,31 @@ public class CartController {
             cartRepository.addToCart(idArticle,idCustomer,quantity);
             return ResponseEntity.ok().build();
         }
+    }
+
+    @PostMapping("/increment")
+    public ResponseEntity incrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
+        Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
+        if (cart.isEmpty()) {
+            cartRepository.addToCart(idArticle,idCustomer,1);
+            return ResponseEntity.ok().build();
+        }
+        cart.get().setQuantity(cart.get().getQuantity() + 1);
+        cartRepository.save(cart.get());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/decrement")
+    public ResponseEntity decrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
+        Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
+        if(cart.get().getQuantity() == 1) {
+            cartRepository.delete(cart.get());
+            return ResponseEntity.ok().build();
+        }
+        cart.get().setQuantity(cart.get().getQuantity() -1);
+        cartRepository.save(cart.get());
+        return ResponseEntity.ok().build();
+
     }
 
     @PutMapping()
