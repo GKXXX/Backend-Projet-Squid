@@ -5,7 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.testsqljppptn.entity.Article;
 import com.example.testsqljppptn.entity.Cart;
+import com.example.testsqljppptn.repositories.ArticleRepository;
 import com.example.testsqljppptn.repositories.CartRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -19,13 +21,18 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Payment {
 
     @Autowired
     CartRepository cartRepository;
+
+    @Autowired
+    ArticleRepository articleRepository;
 
     static class CreatePaymentResponse {
         private String clientSecret;
@@ -49,15 +56,27 @@ public class Payment {
         Stripe.apiKey = stripeSecretKey;
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder().setAmount(getTotalAmount(idCustomer)).setCurrency("eur").setAutomaticPaymentMethods(PaymentIntentCreateParams.AutomaticPaymentMethods.builder().setEnabled(true).build()).build();
         PaymentIntent paymentIntent = PaymentIntent.create(params);
+        Map<String,Object> clientSecret = new HashMap<>();
+        clientSecret.put("clientSecret",paymentIntent.getClientSecret());
+        updateStock(idCustomer);
+        return ResponseEntity.ok(clientSecret);
 
-        CreatePaymentResponse paymentResponse = new CreatePaymentResponse(paymentIntent.getClientSecret());
-
-        return ResponseEntity.ok(paymentResponse);
     }
 
     private Long getTotalAmount(int idCustomer) {
         ArrayList<Cart> listCart = (ArrayList<Cart>) cartRepository.getCartByCustomer(idCustomer);
-        Long totalAmount = null;
+        Long totalAmount = 0L;
+        for (Cart cart:listCart) {
+            totalAmount += cart.getArticle().getPrice() * cart.getQuantity();
+        }
         return totalAmount;
+    }
+
+    private void updateStock(int idCustomer) {
+        ArrayList<Cart> listCart = (ArrayList<Cart>) cartRepository.getCartByCustomer(idCustomer);
+        for (Cart cart:listCart) {
+            cart.getArticle().setStock(cart.getArticle().getStock() - cart.getQuantity());
+            articleRepository.save(cart.getArticle());
+        }
     }
 }

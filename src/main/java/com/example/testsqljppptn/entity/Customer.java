@@ -37,9 +37,8 @@ public class Customer {
     private Set<Contact> contacts;
     @OneToMany(mappedBy = "id")
     private Set<Order> orders;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name = "favorites",joinColumns = {@JoinColumn(name = "id_customer")}, inverseJoinColumns = {@JoinColumn(name = "id_article")})
-    private Set<Article> favorites;
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    private Set<Favorite> favorites;
     @JsonIgnore
     @OneToMany( mappedBy = "id")
     private Set<Rating> ratings;
@@ -95,7 +94,7 @@ public class Customer {
         return orders;
     }
 
-    public Set<Article> getFavorites() {
+    public Set<Favorite> getFavorites() {
         return favorites;
     }
 
@@ -168,7 +167,7 @@ public class Customer {
         this.orders = orders;
     }
 
-    public void setFavorites(Set<Article> favorites) {
+    public void setFavorites(Set<Favorite> favorites) {
         this.favorites = favorites;
     }
 

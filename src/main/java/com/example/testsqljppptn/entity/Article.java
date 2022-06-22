@@ -28,8 +28,8 @@ public class Article {
     @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
     private Set<Order> orders;
     @JsonIgnore
-    @ManyToMany(mappedBy = "favorites",fetch = FetchType.EAGER)
-    private Set<Customer> favorites;
+    @OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
+    private Set<Favorite> favorites;
     @OneToMany(mappedBy = "rating",cascade = CascadeType.MERGE)
     private Set<Rating> ratings;
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
@@ -156,11 +156,11 @@ public class Article {
         this.orders = orders;
     }
 
-    public Set<Customer> getFavorites() {
+    public Set<Favorite> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(Set<Customer> favorites) {
+    public void setFavorites(Set<Favorite> favorites) {
         this.favorites = favorites;
     }
 

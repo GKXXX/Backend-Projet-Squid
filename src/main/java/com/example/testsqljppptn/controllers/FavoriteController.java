@@ -1,9 +1,12 @@
 package com.example.testsqljppptn.controllers;
 
+
+import com.example.testsqljppptn.entity.Favorite;
 import com.example.testsqljppptn.repositories.FavoriteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -19,7 +22,8 @@ public class FavoriteController {
     }
 
     @GetMapping()
-    public void getFavoritesByCustomer(@RequestParam("idCustomer") int idCustomer) {
+    public List<Favorite> getFavoritesByCustomer(@RequestParam("idCustomer") int idCustomer) {
+        return favoriteRepository.getFavoritesByIdCustomer(idCustomer);
 
     }
 }
