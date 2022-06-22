@@ -21,7 +21,7 @@ public class Article {
 
     private String color;
 
-    private Float price;
+    private Long price;
     @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)
     private List<Image> images;
     @JsonIgnore
@@ -45,7 +45,7 @@ public class Article {
         this.name = label;
     }
 
-    public Article(int id_article, String name, String description, int stock, String color, Float price, List<Image> images) {
+    public Article(int id_article, String name, String description, int stock, String color, Long price, List<Image> images) {
         this.id = id_article;
         this.name = name;
         this.description = description;
@@ -55,7 +55,7 @@ public class Article {
         this.images = images;
     }
 
-    public Article(int id_article, String name, String description, int stock, String color, Float price, List<Image> images, Set<Rating> ratings) {
+    public Article(int id_article, String name, String description, int stock, String color, Long price, List<Image> images, Set<Rating> ratings) {
         this.id = id_article;
         this.name = name;
         this.description = description;
@@ -66,7 +66,7 @@ public class Article {
         this.ratings = ratings;
     }
 
-    public Article(String name, String description, int stock, String color, Float price) {
+    public Article(String name, String description, int stock, String color, Long price) {
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -74,7 +74,7 @@ public class Article {
         this.price = price;
     }
 
-    public Article(String name, String description, int stock, String color, Float price, List<Image> images) {
+    public Article(String name, String description, int stock, String color, Long price, List<Image> images) {
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -129,11 +129,11 @@ public class Article {
         this.color = color;
     }
 
-    public Float getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
