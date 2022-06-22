@@ -55,9 +55,9 @@ public class Payment {
         return ResponseEntity.ok(paymentResponse);
     }
 
-    /**private Long getTotalAmount(int idCustomer) {
+    private Long getTotalAmount(int idCustomer) {
         ArrayList<Cart> listCart = (ArrayList<Cart>) cartRepository.getCartByCustomer(idCustomer);
-        Long totalAmount;
-
-    }*/
+        Long totalAmount = null;
+        return totalAmount;
+    }
 }
