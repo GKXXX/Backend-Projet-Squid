@@ -22,7 +22,7 @@ public class CartController {
     private CartRepository cartRepository;
 
     @GetMapping("/byCustomer")
-    public ResponseEntity getByCustomer(@RequestParam("idCustomer") int idCustomer, @RequestHeader String token) {
+    public ResponseEntity getByCustomer(@RequestParam("idCustomer") int idCustomer, @RequestHeader("token") String token) {
         try {
             Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
