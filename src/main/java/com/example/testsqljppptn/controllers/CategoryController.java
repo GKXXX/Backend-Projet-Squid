@@ -22,13 +22,13 @@ public class CategoryController {
     CategoryRepository categoryRepository;
 
     @GetMapping()
-    public Iterable<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public ResponseEntity getAllCategories() {
+        return ResponseEntity.ok(categoryRepository.findAll());
     }
 
     @GetMapping("/byId")
-    public Optional<Category> getById(@RequestParam Long id) {
-        return categoryRepository.findById(id);
+    public ResponseEntity getById(@RequestParam Long id) {
+        return ResponseEntity.ok(categoryRepository.findById(id));
     }
 
     @PostMapping()

@@ -69,6 +69,7 @@ public class AutenticationController {
 
     @PostMapping("/inscription")
     public ResponseEntity inscription(@RequestBody Customer registeringCustomerInfo) {
+        String emptyString ="";
         Iterable<Customer> listCustomer = customerRepository.findAll();
         if(IsUserAlreadyExist(listCustomer,registeringCustomerInfo.getMail())) {
             return ResponseEntity.internalServerError().body("Already existing user.");
@@ -83,6 +84,23 @@ public class AutenticationController {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
         }
+
+        registeringCustomerInfo.setAddress(emptyString);
+
+        registeringCustomerInfo.setName(emptyString);
+
+        registeringCustomerInfo.setFirstName(emptyString);
+
+        registeringCustomerInfo.setAddressComment(emptyString);
+
+        registeringCustomerInfo.setCity(emptyString);
+
+        registeringCustomerInfo.setPostalCode(0);
+
+        registeringCustomerInfo.setCivility(registeringCustomerInfo.getCivility());
+
+        registeringCustomerInfo.setAdmin(false);
+
         registeringCustomerInfo.setPassword(hashedPassword);
         customerRepository.save(registeringCustomerInfo);
         return ResponseEntity.ok("OK");

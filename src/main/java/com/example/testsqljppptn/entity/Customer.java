@@ -9,8 +9,8 @@ import java.util.Set;
 @Table(name="customers")
 public class Customer {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy= GenerationType.TABLE)
+    private int id;
 
     @Column(nullable = false)
     private String mail;
@@ -44,9 +44,11 @@ public class Customer {
     @JsonIgnore
     @OneToMany(mappedBy = "id")
     private Set<Contact> contacts;
+    @JsonIgnore
     @OneToMany(mappedBy = "id")
     private Set<Order> orders;
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private Set<Favorite> favorites;
     @JsonIgnore
     @OneToMany( mappedBy = "id")
@@ -119,11 +121,11 @@ public class Customer {
         this.civility = civilite;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -182,5 +184,9 @@ public class Customer {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public void setPostalCode(Integer postalCode) {
+        this.postalCode = postalCode;
     }
 }

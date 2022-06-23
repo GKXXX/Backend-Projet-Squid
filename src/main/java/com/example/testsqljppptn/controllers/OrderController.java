@@ -22,8 +22,8 @@ public class OrderController {
     OrderRepository orderRepository;
 
     @GetMapping()
-    public Iterable<Order> getAllOrders(@RequestHeader("token") String token) {
-        return orderRepository.findAll();
+    public ResponseEntity getAllOrders(@RequestHeader("token") String token) {
+        return ResponseEntity.ok(orderRepository.findAll());
     }
 
     /**

@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.testsqljppptn.entity.Customer;
 import com.example.testsqljppptn.repositories.CustomerRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,23 +26,18 @@ public class CustomerController   {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @JsonIgnore
     @GetMapping()
-    public ResponseEntity getAllCustomers(@RequestHeader("token") String token){
-        try {
-            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
-            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
-            DecodedJWT jwt = verifier.verify(token);
-        } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
-        }
+    public @ResponseBody
+    ResponseEntity getAllCustomers() {
         return ResponseEntity.ok(customerRepository.findAll());
     }
 
     @GetMapping("/byId")
-    public ResponseEntity<Optional<Customer>> getCustomerById(@RequestParam Long id) {
+    public @ResponseBody ResponseEntity getCustomerById(@RequestParam int id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()) {
-            return ResponseEntity.ok(customer);
+            return ResponseEntity.ok(customer.get().isAdmin());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -78,7 +74,7 @@ public class CustomerController   {
     }
 
     @PutMapping()
-    public ResponseEntity<Optional<Customer>> editCustomer(@RequestParam Long id,@RequestBody Customer customer) {
+    public ResponseEntity<Optional<Customer>> editCustomer(@RequestParam int id,@RequestBody Customer customer) {
         Optional<Customer> customerToEdit = customerRepository.findById(id);
         if (customerToEdit.isPresent()) {
             if (customer.getMail() != null) {
@@ -130,7 +126,7 @@ public class CustomerController   {
     }
 
     @PutMapping("/editPassword")
-    public ResponseEntity editPassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword,@RequestParam("idCustomer") Long idCustomer) {
+    public ResponseEntity editPassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword,@RequestParam("idCustomer") int idCustomer) {
         String hashedPasswordOldPassword = "";
         Optional<Customer> customerToEdit = customerRepository.findById(idCustomer);
         if (customerToEdit.isPresent()) {
@@ -164,7 +160,14 @@ public class CustomerController   {
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteCustomer(@RequestParam Long id) {
+    public ResponseEntity deleteCustomer(@RequestParam int id,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         customerRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
