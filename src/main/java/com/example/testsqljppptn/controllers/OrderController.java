@@ -1,5 +1,10 @@
 package com.example.testsqljppptn.controllers;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.testsqljppptn.entity.Order;
 import com.example.testsqljppptn.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +22,7 @@ public class OrderController {
     OrderRepository orderRepository;
 
     @GetMapping()
-    public Iterable<Order> getAllOrders() {
+    public Iterable<Order> getAllOrders(@RequestHeader("token") String token) {
         return orderRepository.findAll();
     }
 
@@ -29,7 +34,14 @@ public class OrderController {
     }*/
 
     @GetMapping("/byId")
-    public ResponseEntity<Optional<Order>> getOrder(@RequestParam Long id) {
+    public ResponseEntity getOrder(@RequestParam Long id,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
             return ResponseEntity.ok(order);
@@ -38,14 +50,40 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/byCustomer")
+    public ResponseEntity getOrdersByCustomer(@RequestParam int idCustomer,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
+        return ResponseEntity.ok(orderRepository.getMyOrder(idCustomer));
+    }
+
     @PostMapping()
-    public ResponseEntity createOrder(@RequestBody Order order) {
+    public ResponseEntity createOrder(@RequestBody Order order,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         orderRepository.save(order);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteOrder(@RequestParam Long id) {
+    public ResponseEntity deleteOrder(@RequestParam Long id,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         orderRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -1,5 +1,10 @@
 package com.example.testsqljppptn.controllers;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.testsqljppptn.entity.*;
 import com.example.testsqljppptn.repositories.CategoryRepository;
 import com.example.testsqljppptn.repositories.ImageRepository;
@@ -27,7 +32,14 @@ public class ArticleController {
     private ImageRepository imageRepository;
 
     @PostMapping()
-    public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article) {
+    public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         ArrayList<Image> listImageArticle = new ArrayList<>();
         if (article.getImages() != null) {
             for (Image image : article.getImages()) {
@@ -130,7 +142,14 @@ public class ArticleController {
     }
 
     @PutMapping()
-    public @ResponseBody ResponseEntity editArticle(@RequestParam int id,@RequestBody Article article) {
+    public @ResponseBody ResponseEntity editArticle(@RequestParam int id,@RequestBody Article article,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         Optional<Article > articleToEdit = articleRepository.findById(id);
         if (articleToEdit.isPresent()) {
             if (article.getName() != null) {
@@ -169,7 +188,14 @@ public class ArticleController {
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteArticle(@RequestParam("id") int id){
+    public ResponseEntity deleteArticle(@RequestParam("id") int id,@RequestHeader("token") String token){
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         articleRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

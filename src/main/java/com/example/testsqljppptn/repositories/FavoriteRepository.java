@@ -21,4 +21,9 @@ public interface FavoriteRepository extends CrudRepository<Favorite,Integer> {
 
     @Query(value = "SELECT * FROM favorites INNER JOIN articles ON favorites.article = articles.id WHERE favorites.customer = :idCustomer",nativeQuery = true)
     List<Favorite> getFavoritesByIdCustomer(@Param("idCustomer") int idCustomer);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM favorites WHERE customer = :idCustomer AND article = :idArticle",nativeQuery = true)
+    void deleteFavoriteByCustomerAndArticle(@Param("idCustomer") int idCustomer,@Param("idArticle") int idArticle);
 }

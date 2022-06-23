@@ -34,7 +34,14 @@ public class CartController {
     }
 
     @PostMapping("/withQuantity")
-    public ResponseEntity addToCartWithQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quantity) {
+    public ResponseEntity addToCartWithQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quantity,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
         if (cart.isEmpty()) {
             cartRepository.addToCart(idArticle, idCustomer, quantity);
@@ -47,7 +54,14 @@ public class CartController {
     }
 
     @PostMapping("/increment")
-    public ResponseEntity incrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
+    public ResponseEntity incrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
         if (cart.isEmpty()) {
             cartRepository.addToCart(idArticle,idCustomer,1);
@@ -59,7 +73,14 @@ public class CartController {
     }
 
     @PostMapping("/decrement")
-    public ResponseEntity decrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
+    public ResponseEntity decrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
         if(cart.get().getQuantity() == 1) {
             cartRepository.delete(cart.get());
@@ -72,19 +93,40 @@ public class CartController {
     }
 
     @PutMapping()
-    public ResponseEntity modifyQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quatity) {
+    public ResponseEntity modifyQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quatity,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         cartRepository.updatePanier(idArticle,idCustomer,quatity);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteArticleInCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer) {
+    public ResponseEntity deleteArticleInCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         cartRepository.deleteArticleInPanier(idArticle,idCustomer);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/byCustomer")
-    public ResponseEntity deleteCartByCustomer(@RequestParam("idCustomer") int idCustomer) {
+    public ResponseEntity deleteCartByCustomer(@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         cartRepository.deleteCartByCustomer(idCustomer);
         return ResponseEntity.ok().build();
     }

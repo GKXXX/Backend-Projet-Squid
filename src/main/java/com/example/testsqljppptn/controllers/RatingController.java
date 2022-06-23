@@ -1,5 +1,10 @@
 package com.example.testsqljppptn.controllers;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.testsqljppptn.entity.Rating;
 import com.example.testsqljppptn.repositories.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +20,14 @@ public class RatingController {
     RatingRepository ratingRepository;
 
     @PostMapping()
-    public ResponseEntity postRating(@RequestBody Rating rating) {
-        System.out.println(rating.getArticle().getId());
-        System.out.println(rating.getCustomer().getId());
+    public ResponseEntity postRating(@RequestBody Rating rating,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("Token d'authentification invalide");
+        }
         ratingRepository.save(rating);
         return ResponseEntity.ok().build();
     }

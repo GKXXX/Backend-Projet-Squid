@@ -15,22 +15,31 @@ public class Customer {
     @Column(nullable = false)
     private String mail;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = true)
     private String name;
 
+    @Column(nullable = true)
     private String firstName;
 
+    @Column(nullable = true)
     private String address;
 
+    @Column(nullable = true)
     private String city;
 
-    private int postalCode;
+    @Column(nullable = true)
+    private Integer postalCode;
 
+    @Column(nullable = false)
     private boolean isAdmin;
 
+    @Column(nullable = true)
     private String civility;
 
+    @Column(nullable = true)
     private String addressComment;
     @JsonIgnore
     @OneToMany(mappedBy = "id")

@@ -48,5 +48,5 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
     void deleteAll();
 
     @Query(value = "SELECT * FROM orders WHERE customer=:idCustomer",nativeQuery = true)
-    Iterable<Order> getMyOrder(@Param("idCustomer") Long idCustomer);
+    Iterable<Order> getMyOrder(@Param("idCustomer") int idCustomer);
 }

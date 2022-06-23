@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.testsqljppptn.entity.Customer;
 import com.example.testsqljppptn.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,7 @@ public class CustomerController   {
     }
 
     @PostMapping()
-    public ResponseEntity createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity createCustomer(@RequestBody Customer customer,@RequestHeader("token") String token) {
         Iterable<Customer> listCustomer = customerRepository.findAll();
         if(IsUserAlreadyExist(listCustomer,customer.getMail())) {
             return ResponseEntity.internalServerError().body("Already existing user.");
@@ -157,7 +158,7 @@ public class CustomerController   {
                 customerRepository.save(customerToEdit.get());
                 return ResponseEntity.ok("Mot de passe modifié.");
             }
-            return ResponseEntity.ok("Ancien mot de passe incorrect.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Ancien mot de passe incorrect.");
         }
         return ResponseEntity.ok("Utilisateur introuvable.");
     }

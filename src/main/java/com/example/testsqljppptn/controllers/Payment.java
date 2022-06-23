@@ -56,7 +56,7 @@ public class Payment {
         }
 
         Stripe.apiKey = stripeSecretKey;
-        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder().setAmount(getTotalAmount(idCustomer)).setCurrency("eur").setAutomaticPaymentMethods(PaymentIntentCreateParams.AutomaticPaymentMethods.builder().setEnabled(true).build()).build();
+        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder().setAmount(getTotalAmount(idCustomer) * 100).setCurrency("eur").setAutomaticPaymentMethods(PaymentIntentCreateParams.AutomaticPaymentMethods.builder().setEnabled(true).build()).build();
         PaymentIntent paymentIntent = PaymentIntent.create(params);
         Map<String,Object> clientSecret = new HashMap<>();
         clientSecret.put("clientSecret",paymentIntent.getClientSecret());
