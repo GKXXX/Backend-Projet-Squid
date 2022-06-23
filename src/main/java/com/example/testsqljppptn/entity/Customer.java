@@ -31,7 +31,7 @@ public class Customer {
     private String city;
 
     @Column(nullable = true)
-    private Integer postalCode;
+    private int postalCode;
 
     @Column(nullable = false)
     private boolean isAdmin;
