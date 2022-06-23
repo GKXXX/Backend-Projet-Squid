@@ -97,7 +97,7 @@ public class AutenticationController {
 
         registeringCustomerInfo.setPostalCode(0);
 
-        registeringCustomerInfo.setCivility(registeringCustomerInfo.getCivility());
+        registeringCustomerInfo.setCivility(emptyString);
 
         registeringCustomerInfo.setAdmin(false);
 

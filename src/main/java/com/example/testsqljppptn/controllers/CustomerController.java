@@ -60,6 +60,23 @@ public class CustomerController   {
             return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
         }
         customer.setPassword(hashedPassword);
+
+        customer.setAddress("");
+
+        customer.setName("");
+
+        customer.setFirstName("");
+
+        customer.setAddressComment("");
+
+        customer.setCity("");
+
+        customer.setPostalCode(0);
+
+        customer.setCivility("");
+
+        customer.setAdmin(false);
+
         customerRepository.save(customer);
         return ResponseEntity.ok().build();
     }
