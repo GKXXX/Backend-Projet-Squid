@@ -37,7 +37,7 @@ public class CustomerController   {
     public @ResponseBody ResponseEntity getCustomerById(@RequestParam int id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()) {
-            return ResponseEntity.ok(customer.get().isAdmin());
+            return ResponseEntity.ok(customer.get());
         } else {
             return ResponseEntity.notFound().build();
         }
