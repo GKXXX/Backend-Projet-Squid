@@ -93,7 +93,11 @@ public class Payment {
         orderToCreate.setCustomer(customerRepository.findById(idCustomer).get());
         orderToCreate.setShipperyState("Validée");
         orderToCreate.setTotalAmmount(getTotalAmount(idCustomer));
-        orderToCreate.setDeliveryDate(new Date());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_YEAR,14);
+        orderToCreate.setDeliveryDate(calendar.getTime());
+        orderToCreate.setNames(orderToCreate.getCustomer().getFirstName() + " " + orderToCreate.getCustomer().getName());
         orderToCreate.setShippingAddress("" + orderToCreate.getCustomer().getAddress() + ", " + orderToCreate.getCustomer().getPostalCode() + " " + orderToCreate.getCustomer().getCity());
         HashSet<ArticleToOrder> listArticleToOrderToInsert = new HashSet<ArticleToOrder>();
         for (Cart cart:listCart) {
