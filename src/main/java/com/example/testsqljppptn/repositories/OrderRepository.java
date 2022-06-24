@@ -47,6 +47,6 @@ public interface OrderRepository extends CrudRepository<Order,Integer> {
     @Override
     void deleteAll();
 
-    @Query(value = "SELECT * FROM orders WHERE customer=:idCustomer",nativeQuery = true)
+    @Query(value = "SELECT * FROM orders WHERE customer=:idCustomer LIMIT 5",nativeQuery = true)
     Iterable<Order> getMyOrder(@Param("idCustomer") int idCustomer);
 }

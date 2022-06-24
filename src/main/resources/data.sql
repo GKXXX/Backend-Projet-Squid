@@ -1,4 +1,4 @@
-INSERT INTO customers(id,mail,password,is_admin,address,address_comment,city,civility,first_name,name,postal_code) VALUES (99999,'j@gmail.com','8f41069811f118b009ac2c70987e04491180c762bb58be97b33562363d06de4f64b4e6556c0a240676d98faa1fb1875dab46bafc4e8ff3fd70a196e912f5e275',true,'','','','','','',0);
+INSERT INTO customers(id,mail,password,is_admin,address,address_comment,city,civility,first_name,name,postal_code) VALUES (99999,'j@gmail.com','8f41069811f118b009ac2c70987e04491180c762bb58be97b33562363d06de4f64b4e6556c0a240676d98faa1fb1875dab46bafc4e8ff3fd70a196e912f5e275',true,'36 quai des orfèvres','','Paris','','Laurent','Atubax',75013);
 INSERT INTO categories(id,name) VALUES (1,'Bureau'),
                                        (2,'Chaise'),
                                        (3,'Meuble'),
