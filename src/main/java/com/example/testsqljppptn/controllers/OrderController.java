@@ -34,7 +34,7 @@ public class OrderController {
     }*/
 
     @GetMapping("/byId")
-    public ResponseEntity getOrder(@RequestParam Long id,@RequestHeader("token") String token) {
+    public ResponseEntity getOrder(@RequestParam int id,@RequestHeader("token") String token) {
         try {
             Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
@@ -51,7 +51,7 @@ public class OrderController {
     }
 
     @GetMapping("/byCustomer")
-    public ResponseEntity getOrdersByCustomer(@RequestParam int idCustomer,@RequestHeader("token") String token) {
+    public ResponseEntity getOrdersByCustomer(@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
         try {
             Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
@@ -76,7 +76,7 @@ public class OrderController {
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteOrder(@RequestParam Long id,@RequestHeader("token") String token) {
+    public ResponseEntity deleteOrder(@RequestParam int id,@RequestHeader("token") String token) {
         try {
             Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();

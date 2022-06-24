@@ -7,7 +7,7 @@ import java.util.Set;
 @Table(name="ratings")
 public class Rating {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private float rating;

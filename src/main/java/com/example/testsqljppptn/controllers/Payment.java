@@ -5,10 +5,11 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.testsqljppptn.entity.Article;
-import com.example.testsqljppptn.entity.Cart;
+import com.example.testsqljppptn.entity.*;
 import com.example.testsqljppptn.repositories.ArticleRepository;
 import com.example.testsqljppptn.repositories.CartRepository;
+import com.example.testsqljppptn.repositories.CustomerRepository;
+import com.example.testsqljppptn.repositories.OrderRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -21,10 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @Controller
@@ -34,7 +32,13 @@ public class Payment {
     CartRepository cartRepository;
 
     @Autowired
+    CustomerRepository customerRepository;
+
+    @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     static class CreatePaymentResponse {
         private String clientSecret;
@@ -80,5 +84,25 @@ public class Payment {
             cart.getArticle().setStock(cart.getArticle().getStock() - cart.getQuantity());
             articleRepository.save(cart.getArticle());
         }
+    }
+
+    @PostMapping("/confirmOrder")
+    public ResponseEntity confirmOrder(@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
+        List<Cart> listCart = cartRepository.getCartByCustomer(idCustomer);
+        Order orderToCreate = new Order();
+        orderToCreate.setCustomer(customerRepository.findById(idCustomer).get());
+        orderToCreate.setShipperyState("Validée");
+        orderToCreate.setTotalAmmount(getTotalAmount(idCustomer));
+        orderToCreate.setDeliveryDate(new Date());
+        orderToCreate.setShippingAddress("" + orderToCreate.getCustomer().getAddress() + ", " + orderToCreate.getCustomer().getPostalCode() + " " + orderToCreate.getCustomer().getCity());
+        HashSet<ArticleToOrder> listArticleToOrderToInsert = new HashSet<ArticleToOrder>();
+        for (Cart cart:listCart) {
+            listArticleToOrderToInsert.add(new ArticleToOrder(cart.getArticle(),orderToCreate,cart.getQuantity(),cart.getArticle().getPrice()));
+        }
+        orderToCreate.setArticlesToOrder(listArticleToOrderToInsert);
+        orderRepository.save(orderToCreate);
+        updateStock(idCustomer);
+        cartRepository.deleteCartByCustomer(idCustomer);
+        return ResponseEntity.ok().build();
     }
 }

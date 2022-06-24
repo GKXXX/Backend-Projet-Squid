@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "articles")
 public class Article {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -25,8 +25,8 @@ public class Article {
     @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)
     private List<Image> images;
     @JsonIgnore
-    @ManyToMany(mappedBy ="articles",fetch = FetchType.EAGER)
-    private Set<Order> orders;
+    @OneToMany(mappedBy ="article",fetch = FetchType.EAGER)
+    private Set<ArticleToOrder> orderToArticle;
     @JsonIgnore
     @OneToMany(mappedBy = "article",fetch = FetchType.EAGER)
     private Set<Favorite> favorites;
@@ -148,12 +148,12 @@ public class Article {
 
 
 
-    public Set<Order> getOrders() {
-        return orders;
+    public Set<ArticleToOrder> getOrders() {
+        return orderToArticle;
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setOrders(Set<ArticleToOrder> orders) {
+        this.orderToArticle = orders;
     }
 
     public Set<Favorite> getFavorites() {

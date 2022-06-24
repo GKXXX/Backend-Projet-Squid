@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface OrderRepository extends CrudRepository<Order,Long> {
+public interface OrderRepository extends CrudRepository<Order,Integer> {
 
     @Override
     <S extends Order> S save(S entity);
@@ -18,28 +18,28 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
     <S extends Order> Iterable<S> saveAll(Iterable<S> entities);
 
     @Override
-    Optional<Order> findById(Long aLong);
+    Optional<Order> findById(Integer aLong);
 
     @Override
-    boolean existsById(Long aLong);
+    boolean existsById(Integer aLong);
 
     @Override
     Iterable<Order> findAll();
 
     @Override
-    Iterable<Order> findAllById(Iterable<Long> longs);
+    Iterable<Order> findAllById(Iterable<Integer> longs);
 
     @Override
     long count();
 
     @Override
-    void deleteById(Long aLong);
+    void deleteById(Integer aLong);
 
     @Override
     void delete(Order entity);
 
     @Override
-    void deleteAllById(Iterable<? extends Long> longs);
+    void deleteAllById(Iterable<? extends Integer> longs);
 
     @Override
     void deleteAll(Iterable<? extends Order> entities);

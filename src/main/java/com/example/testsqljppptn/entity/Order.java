@@ -4,40 +4,46 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    private Float totalAmmount;
+    private Long totalAmmount;
 
     private String shipperyState;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-    @JoinTable(name="order_to_article",joinColumns = {@JoinColumn(name="id_order")}, inverseJoinColumns = {@JoinColumn(name="id_article")})
-    private Set<Article> articles;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String shippingAddress;
+
+    private String names;
+
+    private Date deliveryDate;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<ArticleToOrder> articlesToOrder;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_customer",referencedColumnName = "id")
+    @JoinColumn(name="customer",referencedColumnName = "id")
     private Customer customer;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Float getTotalAmmount() {
+    public Long getTotalAmmount() {
         return totalAmmount;
     }
 
-    public void setTotalAmmount(Float totalAmmount) {
+    public void setTotalAmmount(Long totalAmmount) {
         this.totalAmmount = totalAmmount;
     }
 
@@ -49,12 +55,8 @@ public class Order {
         this.shipperyState = shipperyState;
     }
 
-    public Set<Article> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(Set<Article> articles) {
-        this.articles = articles;
+    public Set<ArticleToOrder> getArticlesToOrder() {
+        return articlesToOrder;
     }
 
     public Customer getCustomer() {
@@ -63,5 +65,33 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public String getNames() {
+        return names;
+    }
+
+    public void setNames(String names) {
+        this.names = names;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public void setArticlesToOrder(Set<ArticleToOrder> articlesToOrder) {
+        this.articlesToOrder = articlesToOrder;
     }
 }
