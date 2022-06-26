@@ -21,6 +21,12 @@ public class CartController {
     @Autowired
     private CartRepository cartRepository;
 
+    /**
+     * Méthode renvoyant le panier lié à l'utilisateur lié à l'id passé en paramètre
+     * @param idCustomer
+     * @param token
+     * @return
+     */
     @GetMapping("/byCustomer")
     public ResponseEntity getByCustomer(@RequestParam("idCustomer") int idCustomer, @RequestHeader("token") String token) {
         try {
@@ -33,6 +39,14 @@ public class CartController {
         return ResponseEntity.ok(cartRepository.getCartByCustomer(idCustomer));
     }
 
+    /**
+     * Méthode qui insère en base de donnée l'article lié à l'id passé en paramètre dans le panierde l'utilisateur liéé à l'id pass en paramètre avec la quantité passée en paramètre
+     * @param idArticle
+     * @param idCustomer
+     * @param quantity
+     * @param token
+     * @return
+     */
     @PostMapping("/withQuantity")
     public ResponseEntity addToCartWithQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quantity,@RequestHeader("token") String token) {
         try {
@@ -53,6 +67,13 @@ public class CartController {
         }
     }
 
+    /**
+     * Ajoute un article au panier d'un utilisateur ou augmente la quantité
+     * @param idArticle
+     * @param idCustomer
+     * @param token
+     * @return
+     */
     @PostMapping("/increment")
     public ResponseEntity incrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
         try {
@@ -72,6 +93,13 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Diminue la quanttitééé d'un article dans un panier ou le supprime si sa quantité est à 1
+     * @param idArticle
+     * @param idCustomer
+     * @param token
+     * @return
+     */
     @PostMapping("/decrement")
     public ResponseEntity decrementCart(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
         try {
@@ -92,6 +120,14 @@ public class CartController {
 
     }
 
+    /**
+     *Modifie la quantité d'un article dans un panier
+     * @param idArticle
+     * @param idCustomer
+     * @param quatity
+     * @param token
+     * @return
+     */
     @PutMapping()
     public ResponseEntity modifyQuantity(@RequestParam("idArticle") int idArticle,@RequestParam("idCustomer") int idCustomer,@RequestParam("quantity") int quatity,@RequestHeader("token") String token) {
         try {

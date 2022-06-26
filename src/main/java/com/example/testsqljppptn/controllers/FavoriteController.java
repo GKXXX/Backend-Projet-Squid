@@ -22,6 +22,13 @@ public class FavoriteController {
     @Autowired
     private FavoriteRepository favoriteRepository;
 
+    /**
+     * Ajoute un favori en base de donnée
+     * @param idCustomer
+     * @param idArticle
+     * @param token
+     * @return
+     */
     @PostMapping()
     public ResponseEntity postFavorite(@RequestParam("idCustomer") int idCustomer,@RequestParam("idArticle") int idArticle,@RequestHeader("token") String token) {
         try {
@@ -35,6 +42,12 @@ public class FavoriteController {
         return ResponseEntity.ok("Favori ajouté.");
     }
 
+    /**
+     * Récupère les articles en favoris de l'utilisateur lié à l'id donné
+     * @param idCustomer
+     * @param token
+     * @return
+     */
     @GetMapping()
     public ResponseEntity getFavoritesByCustomer(@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
         try {
@@ -48,6 +61,13 @@ public class FavoriteController {
 
     }
 
+    /**
+     * Supprime un article des favoris de l'utilisateur lié à l'id donné
+     * @param idCustomer
+     * @param idArticle
+     * @param token
+     * @return
+     */
     @DeleteMapping()
     public ResponseEntity deleteFavorite(@RequestParam("idCustomer") int idCustomer,@RequestParam("idArticle") int idArticle,@RequestHeader("token") String token) {
         try {

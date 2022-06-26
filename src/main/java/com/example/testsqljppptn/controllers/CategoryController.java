@@ -21,16 +21,31 @@ public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    /**
+     * Réécupère la lsite de toutes les catégories
+     * @return
+     */
     @GetMapping()
     public ResponseEntity getAllCategories() {
         return ResponseEntity.ok(categoryRepository.findAll());
     }
 
+    /**
+     * Récupère la catégorie lié à l'id donné
+     * @param id
+     * @return
+     */
     @GetMapping("/byId")
     public ResponseEntity getById(@RequestParam Long id) {
         return ResponseEntity.ok(categoryRepository.findById(id));
     }
 
+    /**
+     * Ajoute une nouvelle catégorie à la base de donnée
+     * @param category
+     * @param token
+     * @return
+     */
     @PostMapping()
     public ResponseEntity addCategory(@RequestBody Category category,@RequestHeader("token") String token) {
         try {
@@ -44,6 +59,13 @@ public class CategoryController {
         return ResponseEntity.ok("Category added.");
     }
 
+    /**
+     * Modifie une catégorie lié à l'id donné
+     * @param id
+     * @param category
+     * @param token
+     * @return
+     */
     @PutMapping()
     public ResponseEntity editCategory(@RequestParam Long id ,@RequestBody Category category,@RequestHeader("token") String token) {
         try {
@@ -65,6 +87,12 @@ public class CategoryController {
         }
     }
 
+    /**
+     * Supprime la catégorie liée à l'id donné
+     * @param id
+     * @param token
+     * @return
+     */
     @DeleteMapping()
     public ResponseEntity deleteCategory(@RequestParam Long id,@RequestHeader("token") String token) {
         try {

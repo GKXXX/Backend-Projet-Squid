@@ -49,6 +49,13 @@ public class Payment {
 
     private static final String stripeSecretKey = "sk_test_51LDUVDIvLK6IY2HZoJnP6rxcvKcV2GHvgzuZ48wOsigB0cEZb3ihUb2WRIVw1a2UiQbZ67QS9JOHRh53C3m6Xtgm00ZxVlpV6A";
 
+    /**
+     * Renvoie le secret lié à la commande passée par l'utilisateur lié à l'id donné
+     * @param idCustomer
+     * @param token
+     * @return
+     * @throws StripeException
+     */
     @PostMapping("/create-payment-intent")
     public ResponseEntity createPayment(@RequestParam("idCustomer") int idCustomer, @RequestHeader("token") String token) throws StripeException {
         try {
@@ -69,6 +76,11 @@ public class Payment {
 
     }
 
+    /**
+     * Récupère le montant total de la commande
+     * @param idCustomer
+     * @return
+     */
     private Long getTotalAmount(int idCustomer) {
         ArrayList<Cart> listCart = (ArrayList<Cart>) cartRepository.getCartByCustomer(idCustomer);
         Long totalAmount = 0L;
@@ -78,6 +90,10 @@ public class Payment {
         return totalAmount;
     }
 
+    /**
+     * Met à jour les stocks des articles commandés
+     * @param idCustomer
+     */
     private void updateStock(int idCustomer) {
         ArrayList<Cart> listCart = (ArrayList<Cart>) cartRepository.getCartByCustomer(idCustomer);
         for (Cart cart:listCart) {
@@ -86,6 +102,12 @@ public class Payment {
         }
     }
 
+    /**
+     * Méthode appelée à la confirmation de l'achat par le front-end/mobile
+     * @param idCustomer
+     * @param token
+     * @return
+     */
     @PostMapping("/confirmOrder")
     public ResponseEntity confirmOrder(@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
         try {

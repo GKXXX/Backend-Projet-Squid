@@ -26,6 +26,10 @@ public class CustomerController   {
     @Autowired
     private CustomerRepository customerRepository;
 
+    /**
+     * Récupère la liste de tout les utilisateurs
+     * @return
+     */
     @JsonIgnore
     @GetMapping()
     public @ResponseBody
@@ -33,6 +37,11 @@ public class CustomerController   {
         return ResponseEntity.ok(customerRepository.findAll());
     }
 
+    /**
+     * Récupère l'utilisateur lié à l'id donné
+     * @param id
+     * @return
+     */
     @GetMapping("/byId")
     public @ResponseBody ResponseEntity getCustomerById(@RequestParam int id) {
         Optional<Customer> customer = customerRepository.findById(id);
@@ -43,8 +52,21 @@ public class CustomerController   {
         }
     }
 
+    /**
+     * Ajoute un utilisateur en base de donnée
+     * @param customer
+     * @param token
+     * @return
+     */
     @PostMapping()
     public ResponseEntity createCustomer(@RequestBody Customer customer,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
+        }
         Iterable<Customer> listCustomer = customerRepository.findAll();
         if(IsUserAlreadyExist(listCustomer,customer.getMail())) {
             return ResponseEntity.internalServerError().body("{\"error\":\"Already existing user.\"}");
@@ -81,6 +103,12 @@ public class CustomerController   {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * renvoie true si l'utilisateur existe en base donnée sinon renvoie false
+     * @param listCustomer
+     * @param mail
+     * @return
+     */
     private boolean IsUserAlreadyExist(Iterable<Customer> listCustomer,String mail) {
         for (Customer customer: listCustomer) {
             if(customer.getMail().equals(mail)) {
@@ -90,6 +118,12 @@ public class CustomerController   {
         return false;
     }
 
+    /**
+     * Modifie l'utilisateur liéé à l'id donné
+     * @param id
+     * @param customer
+     * @return
+     */
     @PutMapping()
     public ResponseEntity<Optional<Customer>> editCustomer(@RequestParam int id,@RequestBody Customer customer) {
         Optional<Customer> customerToEdit = customerRepository.findById(id);
@@ -142,6 +176,13 @@ public class CustomerController   {
         }
     }
 
+    /**
+     * Modifie le mot de passe de l'utilisateur lié à l'id donné
+     * @param oldPassword
+     * @param newPassword
+     * @param idCustomer
+     * @return
+     */
     @PutMapping("/editPassword")
     public ResponseEntity editPassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword,@RequestParam("idCustomer") int idCustomer) {
         String hashedPasswordOldPassword = "";
@@ -176,6 +217,12 @@ public class CustomerController   {
         return ResponseEntity.ok("{\"error\":\"Utilisateur introuvable.\"}");
     }
 
+    /**
+     * Supprime l'utilisateur lié à l'id donné
+     * @param id
+     * @param token
+     * @return
+     */
     @DeleteMapping()
     public ResponseEntity deleteCustomer(@RequestParam int id,@RequestHeader("token") String token) {
         try {

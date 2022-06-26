@@ -25,6 +25,11 @@ public class AutenticationController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    /**
+     * Méthode renvoyant le Token d'authentification lié à l'utilisateur souhaitant se connecter
+     * @param connectingCustomerInfo
+     * @return
+     */
     @PostMapping(value = "/connection",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity connect(@RequestBody Customer connectingCustomerInfo) {
         Optional<Customer> loggingCustomer = customerRepository.findByMail(connectingCustomerInfo.getMail());
@@ -67,6 +72,11 @@ public class AutenticationController {
 
     }
 
+    /**
+     * Méthode inscrivant un utilisateur avec les valeurs préésentes dans le corp de la requête
+     * @param registeringCustomerInfo
+     * @return
+     */
     @PostMapping("/inscription")
     public ResponseEntity inscription(@RequestBody Customer registeringCustomerInfo) {
         String emptyString ="";

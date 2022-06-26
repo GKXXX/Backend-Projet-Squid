@@ -10,7 +10,6 @@ import com.example.testsqljppptn.repositories.CategoryRepository;
 import com.example.testsqljppptn.repositories.ImageRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.testsqljppptn.repositories.ArticleRepository;
@@ -32,7 +31,13 @@ public class ArticleController {
     @Autowired
     private ImageRepository imageRepository;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     * Méthode insérant en base de données un nouvel article
+     * @param article
+     * @param token
+     * @return
+     */
+    @PostMapping()
     public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article,@RequestHeader("token") String token) {
         try {
             Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
@@ -55,6 +60,10 @@ public class ArticleController {
         return ResponseEntity.ok().body("article created.");
     }
 
+    /**
+     * Méthode renvoyant la liste des noms des articles ainsi que leur id
+     * @return
+     */
     @GetMapping("/listName")
     public @ResponseBody ResponseEntity getListName(){
 
@@ -75,6 +84,10 @@ public class ArticleController {
         return ResponseEntity.ok(emptyTab);
     }
 
+    /**
+     * Méthode renvoyant les 8 articles les mieux notés ou bien 8 articles aléatoires
+     * @return
+     */
     @GetMapping("/trending")
     public @ResponseBody ResponseEntity getTrending(){
         ArrayList<Article> listArticle = (ArrayList<Article>) articleRepository.findAll();
@@ -103,17 +116,31 @@ public class ArticleController {
         return ResponseEntity.ok().body(listArticleToSend);
     }
 
+    /**
+     * Méthode récupérant la liste des articles présent en base de données
+     * @return
+     */
     @JsonIgnore
     @GetMapping()
     public @ResponseBody Iterable<Article> getAllArticles() {
         return articleRepository.findAll();
     }
 
+    /**
+     * Méthode récupérant les articles lié à la catégorie lié à l'id passé en paramètre
+     * @param id
+     * @return
+     */
     @GetMapping("/getByCategory")
     public @ResponseBody Iterable<Article> getByCategory(@RequestParam Long id) {
         return articleRepository.findByCategory(id);
     }
 
+    /**
+     * Méthode renvoyuant l'article lié à l'id passé en paramètre
+     * @param id
+     * @return
+     */
     @JsonIgnore
     @GetMapping("/byId")
     public @ResponseBody
@@ -125,6 +152,13 @@ public class ArticleController {
         }
     }
 
+    /**
+     * Méthode modifiant l'article lié à l'id passéé en paramètre avec les valeurs données dans le corp de la requête
+     * @param id
+     * @param article
+     * @param token
+     * @return
+     */
     @PutMapping()
     public @ResponseBody ResponseEntity editArticle(@RequestParam int id,@RequestBody Article article,@RequestHeader("token") String token) {
         try {
@@ -171,6 +205,12 @@ public class ArticleController {
 
     }
 
+    /**
+     * Méthode supprimant l'article lié à l'id passé en paramètre
+     * @param id
+     * @param token
+     * @return
+     */
     @DeleteMapping()
     public ResponseEntity deleteArticle(@RequestParam("id") int id,@RequestHeader("token") String token){
         try {

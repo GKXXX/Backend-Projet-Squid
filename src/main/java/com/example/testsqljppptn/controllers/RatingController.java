@@ -19,6 +19,12 @@ public class RatingController {
     @Autowired
     RatingRepository ratingRepository;
 
+    /**
+     * Enregistre une notation pour un article
+     * @param rating
+     * @param token
+     * @return
+     */
     @PostMapping()
     public ResponseEntity postRating(@RequestBody Rating rating,@RequestHeader("token") String token) {
         try {
