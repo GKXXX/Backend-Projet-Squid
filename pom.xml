@@ -55,11 +55,6 @@
             <artifactId>stripe-java</artifactId>
             <version>20.127.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20220320</version>
-        </dependency>
 
     </dependencies>
 

@@ -56,7 +56,7 @@ public class Payment {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
 
         Stripe.apiKey = stripeSecretKey;
@@ -88,6 +88,13 @@ public class Payment {
 
     @PostMapping("/confirmOrder")
     public ResponseEntity confirmOrder(@RequestParam("idCustomer") int idCustomer,@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
+        }
         List<Cart> listCart = cartRepository.getCartByCustomer(idCustomer);
         Order orderToCreate = new Order();
         orderToCreate.setCustomer(customerRepository.findById(idCustomer).get());

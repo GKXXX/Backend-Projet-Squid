@@ -28,7 +28,7 @@ public class CartController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         return ResponseEntity.ok(cartRepository.getCartByCustomer(idCustomer));
     }
@@ -40,7 +40,7 @@ public class CartController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
         if (cart.isEmpty()) {
@@ -60,7 +60,7 @@ public class CartController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
         if (cart.isEmpty()) {
@@ -79,7 +79,7 @@ public class CartController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         Optional<Cart> cart = cartRepository.getCartByCustomerAndArticle(idCustomer,idArticle);
         if(cart.get().getQuantity() == 1) {
@@ -99,7 +99,7 @@ public class CartController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         cartRepository.updatePanier(idArticle,idCustomer,quatity);
         return ResponseEntity.ok().build();
@@ -112,7 +112,7 @@ public class CartController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         cartRepository.deleteArticleInPanier(idArticle,idCustomer);
         return ResponseEntity.ok().build();
@@ -125,7 +125,7 @@ public class CartController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         cartRepository.deleteCartByCustomer(idCustomer);
         return ResponseEntity.ok().build();

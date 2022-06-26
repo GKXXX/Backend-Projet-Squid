@@ -47,7 +47,7 @@ public class CustomerController   {
     public ResponseEntity createCustomer(@RequestBody Customer customer,@RequestHeader("token") String token) {
         Iterable<Customer> listCustomer = customerRepository.findAll();
         if(IsUserAlreadyExist(listCustomer,customer.getMail())) {
-            return ResponseEntity.internalServerError().body("Already existing user.");
+            return ResponseEntity.internalServerError().body("{\"error\":\"Already existing user.\"}");
         }
         String hashedPassword = "";
         try {
@@ -57,7 +57,7 @@ public class CustomerController   {
             hashedPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
+            return ResponseEntity.internalServerError().body("{\"error\":\"Erreur lors de l'encodage du mdp.\"}");
         }
         customer.setPassword(hashedPassword);
 
@@ -171,9 +171,9 @@ public class CustomerController   {
                 customerRepository.save(customerToEdit.get());
                 return ResponseEntity.ok("Mot de passe modifié.");
             }
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Ancien mot de passe incorrect.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"error\":\"Ancien mot de passe incorrect.\"}");
         }
-        return ResponseEntity.ok("Utilisateur introuvable.");
+        return ResponseEntity.ok("{\"error\":\"Utilisateur introuvable.\"}");
     }
 
     @DeleteMapping()
@@ -183,7 +183,7 @@ public class CustomerController   {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         customerRepository.deleteById(id);
         return ResponseEntity.ok().build();

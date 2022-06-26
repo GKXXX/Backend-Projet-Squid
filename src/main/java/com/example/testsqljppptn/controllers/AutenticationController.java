@@ -41,7 +41,7 @@ public class AutenticationController {
             hashedPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
+            return ResponseEntity.internalServerError().body("{\"error\":\"Erreur lors de l'encodage du mdp.\"}");
         }
         if (loggingCustomer.get().getPassword().equals(hashedPassword)) {
             String token = "";
@@ -62,7 +62,7 @@ public class AutenticationController {
 
             return ResponseEntity.ok().body( token );
         } else {
-            return ResponseEntity.internalServerError().body("Mot de passe incorrect");
+            return ResponseEntity.internalServerError().body("{\"error\":\"Mot de passe incorrect\"}");
          }
 
     }
@@ -72,7 +72,7 @@ public class AutenticationController {
         String emptyString ="";
         Iterable<Customer> listCustomer = customerRepository.findAll();
         if(IsUserAlreadyExist(listCustomer,registeringCustomerInfo.getMail())) {
-            return ResponseEntity.internalServerError().body("Already existing user.");
+            return ResponseEntity.internalServerError().body("{\"error\":\"Already existing user.\"}");
         }
         String hashedPassword = "";
         try {
@@ -82,7 +82,7 @@ public class AutenticationController {
             hashedPassword = String.format("%0128x", new BigInteger(1, digest.digest()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Erreur lors de l'encodage du mdp.");
+            return ResponseEntity.internalServerError().body("{\"error\":\"Erreur lors de l'encodage du mdp.\"}");
         }
 
         registeringCustomerInfo.setAddress(emptyString);

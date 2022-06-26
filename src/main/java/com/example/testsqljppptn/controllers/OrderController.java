@@ -23,6 +23,13 @@ public class OrderController {
 
     @GetMapping()
     public ResponseEntity getAllOrders(@RequestHeader("token") String token) {
+        try {
+            Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
+            JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
+            DecodedJWT jwt = verifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
+        }
         return ResponseEntity.ok(orderRepository.findAll());
     }
 
@@ -40,7 +47,7 @@ public class OrderController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
@@ -57,7 +64,7 @@ public class OrderController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         return ResponseEntity.ok(orderRepository.getMyOrder(idCustomer));
     }
@@ -69,7 +76,7 @@ public class OrderController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         orderRepository.save(order);
         return ResponseEntity.ok().build();
@@ -82,7 +89,7 @@ public class OrderController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         orderRepository.deleteById(id);
         return ResponseEntity.ok().build();

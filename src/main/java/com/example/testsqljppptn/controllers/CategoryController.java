@@ -38,7 +38,7 @@ public class CategoryController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         categoryRepository.save(category);
         return ResponseEntity.ok("Category added.");
@@ -51,7 +51,7 @@ public class CategoryController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         Optional<Category> categoryToEdit =  categoryRepository.findById(id);
         if (categoryToEdit.isPresent()) {
@@ -72,7 +72,7 @@ public class CategoryController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         categoryRepository.deleteById(id);
         return ResponseEntity.ok().build();

@@ -29,7 +29,7 @@ public class FavoriteController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         favoriteRepository.saveFavorite(idCustomer,idArticle);
         return ResponseEntity.ok("Favori ajouté.");
@@ -42,7 +42,7 @@ public class FavoriteController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         return ResponseEntity.ok(favoriteRepository.getFavoritesByIdCustomer(idCustomer));
 
@@ -55,7 +55,7 @@ public class FavoriteController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         favoriteRepository.deleteFavoriteByCustomerAndArticle(idCustomer,idArticle);
         return ResponseEntity.ok("Favori supprimé.");

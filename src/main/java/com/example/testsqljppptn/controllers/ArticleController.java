@@ -10,6 +10,7 @@ import com.example.testsqljppptn.repositories.CategoryRepository;
 import com.example.testsqljppptn.repositories.ImageRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.testsqljppptn.repositories.ArticleRepository;
@@ -31,14 +32,14 @@ public class ArticleController {
     @Autowired
     private ImageRepository imageRepository;
 
-    @PostMapping()
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity addNewArticle(@RequestBody Article article,@RequestHeader("token") String token) {
         try {
             Algorithm algo = Algorithm.HMAC512("Cadrillage-78");
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         ArrayList<Image> listImageArticle = new ArrayList<>();
         if (article.getImages() != null) {
@@ -52,23 +53,6 @@ public class ArticleController {
 
         articleRepository.save(article);
         return ResponseEntity.ok().body("article created.");
-    }
-
-    @PostMapping("/multiple")
-    public @ResponseBody ResponseEntity addNewArticles(@RequestBody HashSet<Article> articles) {
-        ArrayList<Image> listImageArticle = new ArrayList<>();
-        for (Article article1:articles) {
-            if (article1.getImages() != null) {
-                for (Image image : article1.getImages()) {
-                    image.setArticle(article1);
-                    listImageArticle.add(image);
-                }
-                article1.setImages(listImageArticle);
-            }
-            articleRepository.save(article1);
-        }
-
-        return ResponseEntity.ok().body("articles created.");
     }
 
     @GetMapping("/listName")
@@ -133,11 +117,11 @@ public class ArticleController {
     @JsonIgnore
     @GetMapping("/byId")
     public @ResponseBody
-    Object getArticleById(@RequestParam("id") Optional<Integer> id) {
+    ResponseEntity getArticleById(@RequestParam("id") Optional<Integer> id) {
         if (id.isPresent()) {
-            return articleRepository.findById(id.get());
+            return ResponseEntity.ok(articleRepository.findById(id.get()));
         } else {
-            return "Id not specified";
+            return ResponseEntity.ok("{\"error\":\"Id not specified\"}");
         }
     }
 
@@ -148,7 +132,7 @@ public class ArticleController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         Optional<Article > articleToEdit = articleRepository.findById(id);
         if (articleToEdit.isPresent()) {
@@ -194,7 +178,7 @@ public class ArticleController {
             JWTVerifier verifier = JWT.require(algo).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
         } catch (JWTVerificationException exception) {
-            return ResponseEntity.ok("Token d'authentification invalide");
+            return ResponseEntity.ok("{\"error\":\"Token d'authentification invalide\"}");
         }
         articleRepository.deleteById(id);
         return ResponseEntity.ok().build();

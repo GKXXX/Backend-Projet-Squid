@@ -10,7 +10,6 @@ import com.example.testsqljppptn.entity.Contact;
 import com.example.testsqljppptn.entity.Customer;
 import com.example.testsqljppptn.repositories.ContactRepository;
 import com.example.testsqljppptn.repositories.CustomerRepository;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
